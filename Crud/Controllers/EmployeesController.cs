@@ -65,6 +65,8 @@ namespace Crud.Controllers
             employee.Email = updateEmployeeDto.Email;
             employee.Phone = updateEmployeeDto.Phone;
             employee.Salary = updateEmployeeDto.Salary;
+            employee.DepartmentId = updateEmployeeDto.DepartmentId;
+
 
             dbContext.SaveChanges();
             return Ok($"Employee with ID {id} has been updated.");
@@ -77,7 +79,8 @@ namespace Crud.Controllers
                 Name = addEmployeeDto.Name,
                 Email = addEmployeeDto.Email,
                 Phone = addEmployeeDto.Phone,  
-                Salary = addEmployeeDto.Salary  
+                Salary = addEmployeeDto.Salary,  
+                DepartmentId = addEmployeeDto.DepartmentId
             };
             dbContext.Employees.Add(employeeEntity);
             dbContext.SaveChanges();

@@ -9,5 +9,8 @@
         public decimal Salary { get; set; }
         public DateTime Created_Date { get; set; }
 
+        // Foreign Key
+        public int DepartmentId { get; set; }
+        public Department? Department { get; set; } = null!;
     }
 }

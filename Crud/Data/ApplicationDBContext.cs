@@ -16,5 +16,6 @@ namespace Crud.Data
         //Employess represents table toa allow CRUD operations
         public DbSet<Employee> Employees{ get; set; }
         public DbSet<SP_Employee> SP_Employees { get; set; }
+        public DbSet<Department> Departments { get; set; }
     }
 }

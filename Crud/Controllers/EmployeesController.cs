@@ -81,6 +81,7 @@ namespace Crud.Controllers
                 Phone = addEmployeeDto.Phone,  
                 Salary = addEmployeeDto.Salary,  
                 DepartmentId = addEmployeeDto.DepartmentId
+                Created_Date = DateTime.UtcNow
             };
             dbContext.Employees.Add(employeeEntity);
             dbContext.SaveChanges();

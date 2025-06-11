@@ -23,8 +23,9 @@ namespace Crud.Service
                 Email = $"user{random.Next(1000, 9999)}@example.com",
                 Phone = $"555-{random.Next(1000, 9999)}",
                 Salary = random.Next(30000, 100000),
-                Created_Date = DateTime.UtcNow
-            };
+                CreatedDate = DateTime.UtcNow,
+                DepartmentId = random.Next(1, 4)
+           };
 
             _dbContext.Employees.Add(employee);
             await _dbContext.SaveChangesAsync();

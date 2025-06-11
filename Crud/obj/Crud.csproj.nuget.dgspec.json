@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\John\\source\\repos\\Crud\\Crud\\Crud.csproj": {}
+    "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Crud.csproj": {}
   },
   "projects": {
-    "C:\\Users\\John\\source\\repos\\Crud\\Crud\\Crud.csproj": {
+    "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Crud.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\John\\source\\repos\\Crud\\Crud\\Crud.csproj",
+        "projectUniqueName": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Crud.csproj",
         "projectName": "Crud",
-        "projectPath": "C:\\Users\\John\\source\\repos\\Crud\\Crud\\Crud.csproj",
-        "packagesPath": "C:\\Users\\John\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\John\\source\\repos\\Crud\\Crud\\obj\\",
+        "projectPath": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Crud.csproj",
+        "packagesPath": "C:\\Users\\Owner\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\John\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -50,6 +50,18 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.20, )"
+            },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.20, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.20, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.16, )"

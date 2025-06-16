@@ -141,6 +141,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Crud.Controllers.EmployeesController",
+    "Method": "ExportEmployeesToCSV",
+    "RelativePath": "api/Employees/export",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.EmployeesController",
+    "Method": "ImportEmployees",
+    "RelativePath": "api/Employees/import-employees",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Crud.Controllers.HomeController",
     "Method": "WriteLog",
     "RelativePath": "api/Home/write-log",

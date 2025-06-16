@@ -9,33 +9,33 @@ namespace Crud.Controllers
     [Route("api/[controller]")]
     public class DepartmentsController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
+        private readonly ApplicationDBContext dbContext;
 
-        public DepartmentsController(ApplicationDBContext context)
+        public DepartmentsController(ApplicationDBContext dbContext)
         {
-            _context = context;
+            this.dbContext = dbContext;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
         {
-            return await _context.Departments.ToListAsync();
+            return await dbContext.Departments.ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Department>> GetDepartment(Guid id)
         {
-            var department = await _context.Departments.FindAsync(id);
+            var department = await dbContext.Departments.FindAsync(id);
             if (department == null) return NotFound();
             return department;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Department>> CreateDepartment(Department department)
+        public async Task<IActionResult> CreateDepartment([FromBody] Department department)
         {
-            _context.Departments.Add(department);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetDepartment), new { id = department.Id }, department);
+            dbContext.Departments.Add(department);
+            await dbContext.SaveChangesAsync();
+            return Ok(new { department.Id, department.Name });
         }
     }
 }

@@ -30,6 +30,5 @@ jobs:
       run: dotnet publish -c Release -o ./publish
     - name: Deploy
       run: |
-        sudo mkdir -p /var/www/html/mywebsite.com/dotnet
         sudo cp -r ./publish/* /var/www/html/mywebsite.com/dotnet
         sudo systemctl restart kestrel-mydotnetapp

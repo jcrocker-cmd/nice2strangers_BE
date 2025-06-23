@@ -16,15 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Setup .NET (non-root path)
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-        install-dir: ~/.dotnet
-
-    - name: Add .NET to PATH
-      run: echo "$HOME/.dotnet" >> $GITHUB_PATH
     - name: Restore dependencies
       run: dotnet restore
     - name: Build

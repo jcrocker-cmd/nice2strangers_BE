@@ -10,6 +10,10 @@ using Hangfire.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

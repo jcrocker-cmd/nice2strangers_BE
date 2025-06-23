@@ -15,7 +15,7 @@ namespace Crud.Service
 
         public async Task AddRandomEmployeeAsync()
         {
-            var random = new Random();
+           var random = new Random();
            var employee = new Employee
             {
                 Id = Guid.NewGuid(),

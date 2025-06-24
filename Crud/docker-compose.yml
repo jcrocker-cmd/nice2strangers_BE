@@ -5,7 +5,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     environment:
-      SA_PASSWORD: "aug151973"
+      SA_PASSWORD: "Aug151973!"
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Express"
     ports:
@@ -20,12 +20,12 @@ services:
       dockerfile: Dockerfile
     container_name: crud-app
     ports:
-      - "8083:8080"
+      - "8083:80"
     depends_on:
       - sqlserver
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=SP_EmployeesDB;User Id=sa;Password=aug151973;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=SP_EmployeesDB;User Id=sa;Password=Aug151973!;TrustServerCertificate=True
 
 volumes:
   sql_data:

@@ -4,18 +4,17 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 80
+EXPOSE 443
 
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Crud/Crud.csproj", "Crud/"]
-RUN dotnet restore "./Crud/Crud.csproj"
+COPY ["Crud.csproj", "."]
+RUN dotnet restore "./Crud.csproj"
 COPY . .
-WORKDIR "/src/Crud"
 RUN dotnet build "./Crud.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

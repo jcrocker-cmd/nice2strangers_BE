@@ -10,7 +10,20 @@ using Hangfire.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://0.0.0.0:8080");
+//builder.WebHost.UseUrls("http://0.0.0.0:80");
+
+// Allow CORS
+// Allow CORS
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowViteDev", policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+    });
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -36,6 +49,8 @@ builder.Services.AddHangfire(config =>
     config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddHangfireServer();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,9 +61,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+// Enable CORS for your React app
+app.UseCors("AllowViteDev");
 app.UseAuthorization();
 app.MapControllers();
-
+app.MapHub<Crud.Hubs.EmployeeHub>("/employeeHub");
 
 // Add Hangfire dashboard
 app.UseHangfireDashboard();

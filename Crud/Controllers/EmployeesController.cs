@@ -1,8 +1,10 @@
 ﻿using Crud.Data;
+using Crud.Hubs;
 using Crud.Models;
 using Crud.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Text;
@@ -17,10 +19,13 @@ namespace Crud.Controllers
         //- It is used to store the injected database context instance for use throughout the controller.
         private readonly ApplicationDBContext dbContext;
 
-        public EmployeesController(ApplicationDBContext dbContext)
+        private readonly IHubContext<EmployeeHub> _hubContext;
+
+        public EmployeesController(ApplicationDBContext dbContext, IHubContext<EmployeeHub> hubContext)
         {
             //- The parameter dbContext is assigned to the private field this.dbContext, making it available throughout the controller.
             this.dbContext = dbContext;
+            _hubContext = hubContext;
         }
 
         //[HttpGet("employees")]
@@ -135,6 +140,10 @@ namespace Crud.Controllers
             };
             dbContext.Employees.Add(employeeEntity);
             dbContext.SaveChanges();
+
+            // Broadcast to all connected clients
+            _hubContext.Clients.All.SendAsync("EmployeeAdded", employeeEntity);
+
             return Ok(employeeEntity);
         }
 

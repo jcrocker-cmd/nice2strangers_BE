@@ -172,8 +172,11 @@ C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Identity.Client.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
@@ -203,6 +206,7 @@ C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Co
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Drawing.Common.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Runtime.Caching.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll

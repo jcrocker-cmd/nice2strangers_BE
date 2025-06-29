@@ -1,0 +1,145 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|c:\\users\\owner\\documents\\hrms\\my files\\.net-crud\\crud\\controllers\\employeescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|solutionrelative:crud\\controllers\\employeescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|c:\\users\\owner\\documents\\hrms\\my files\\.net-crud\\crud\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|solutionrelative:crud\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|c:\\users\\owner\\documents\\hrms\\my files\\.net-crud\\crud\\hubs\\employeehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|solutionrelative:crud\\hubs\\employeehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|c:\\users\\owner\\documents\\hrms\\my files\\.net-crud\\crud\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|solutionrelative:crud\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|c:\\users\\owner\\documents\\hrms\\my files\\.net-crud\\crud\\service\\sp_employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|solutionrelative:crud\\service\\sp_employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|c:\\users\\owner\\documents\\hrms\\my files\\.net-crud\\crud\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|solutionrelative:crud\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|c:\\users\\owner\\documents\\hrms\\my files\\.net-crud\\crud\\migrations\\20250624050142_initialmigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9DFB878-41B9-4732-9FD9-96C94D5E28A6}|Crud\\Crud.csproj|solutionrelative:crud\\migrations\\20250624050142_initialmigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SP_EmployeeService.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Service\\SP_EmployeeService.cs",
+              "RelativeDocumentMoniker": "Crud\\Service\\SP_EmployeeService.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Service\\SP_EmployeeService.cs",
+              "RelativeToolTip": "Crud\\Service\\SP_EmployeeService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-26T05:01:14.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EmployeesController.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Controllers\\EmployeesController.cs",
+              "RelativeDocumentMoniker": "Crud\\Controllers\\EmployeesController.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Controllers\\EmployeesController.cs",
+              "RelativeToolTip": "Crud\\Controllers\\EmployeesController.cs",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAlwHwAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-26T03:25:27.501Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Program.cs",
+              "RelativeDocumentMoniker": "Crud\\Program.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Program.cs",
+              "RelativeToolTip": "Crud\\Program.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAEMAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T02:09:15.848Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ApplicationDBContext.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Data\\ApplicationDBContext.cs",
+              "RelativeDocumentMoniker": "Crud\\Data\\ApplicationDBContext.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Data\\ApplicationDBContext.cs",
+              "RelativeToolTip": "Crud\\Data\\ApplicationDBContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T05:00:37.299Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EmployeeHub.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Hubs\\EmployeeHub.cs",
+              "RelativeDocumentMoniker": "Crud\\Hubs\\EmployeeHub.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Hubs\\EmployeeHub.cs",
+              "RelativeToolTip": "Crud\\Hubs\\EmployeeHub.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-26T03:27:55.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "20250624050142_InitialMigration.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Migrations\\20250624050142_InitialMigration.cs",
+              "RelativeDocumentMoniker": "Crud\\Migrations\\20250624050142_InitialMigration.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\Migrations\\20250624050142_InitialMigration.cs",
+              "RelativeToolTip": "Crud\\Migrations\\20250624050142_InitialMigration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T05:01:42.491Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\appsettings.json",
+              "RelativeDocumentMoniker": "Crud\\appsettings.json",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\HRMS\\MY FILES\\.net-crud\\Crud\\appsettings.json",
+              "RelativeToolTip": "Crud\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-24T02:08:57.611Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

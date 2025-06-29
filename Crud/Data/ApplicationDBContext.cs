@@ -11,6 +11,15 @@ namespace Crud.Data
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.Salary)
+                .HasColumnType("decimal(18,2)");
+
+            // ...any other configuration
+        }
         //DbSet from Microsoft.EntityFrameworkCore
         //<Employee> from Model/Entity
         //Employess represents table toa allow CRUD operations

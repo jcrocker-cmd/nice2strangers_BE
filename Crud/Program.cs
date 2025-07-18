@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Allow CORS
 // Allow CORS
-    builder.Services.AddCors(options =>
+builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowViteDev", policy =>
         {
@@ -41,13 +41,25 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 // ✅ Register your custom service
 builder.Services.AddScoped<ISP_EmployeeService, SP_EmployeeService>();
 builder.Services.AddScoped<IEmployeeJobService, EmployeeJobService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 //builder.Services.AddScoped<SP_EmployeeService>();
 // OR if using interface-based DI
 // builder.Services.AddScoped<ISP_EmployeeService, SP_EmployeeService>();
 
 // Add Hangfire services
 builder.Services.AddHangfire(config =>
-    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.FromSeconds(15),
+        UseRecommendedIsolationLevel = true,
+        UsePageLocksOnDequeue = true,
+        DisableGlobalLocks = true
+    });
+});
+
 builder.Services.AddHangfireServer();
 
 builder.Services.AddSignalR();

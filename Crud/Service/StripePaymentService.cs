@@ -74,7 +74,19 @@ namespace Crud.Service
             return service.Create(options);
         }
 
+
+        public List<Charge> GetPayments()
+        {
+            var service = new ChargeService();
+            var options = new ChargeListOptions
+            {
+                Limit = 100,
+                Expand = new List<string> { "data.refunds" }
+            };
+            var charge = service.List(options);
+            return charge.Data.ToList();
+        }
+
+
     }
-
-
 }

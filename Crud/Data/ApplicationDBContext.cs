@@ -26,5 +26,6 @@ namespace Crud.Data
         public DbSet<Employee> Employees{ get; set; }
         public DbSet<SP_Employee> SP_Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

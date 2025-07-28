@@ -131,7 +131,7 @@ namespace Crud.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult AddEmployee(AddEmployeeDto addEmployeeDto)
+        public IActionResult AddEmployee([FromBody] AddEmployeeDto addEmployeeDto)
         {
             var employeeEntity = new Employee()
             {
@@ -140,16 +140,17 @@ namespace Crud.Controllers
                 Phone = addEmployeeDto.Phone,
                 Salary = addEmployeeDto.Salary,
                 DepartmentId = addEmployeeDto.DepartmentId,
-                CreatedDate = addEmployeeDto.CreatedDate,
+                CreatedDate = DateTime.UtcNow
             };
+
             dbContext.Employees.Add(employeeEntity);
             dbContext.SaveChanges();
 
-            // Broadcast to all connected clients
             _hubContext.Clients.All.SendAsync("EmployeeAdded", employeeEntity);
 
             return Ok(employeeEntity);
         }
+
 
         [HttpGet("count")]
         public IActionResult GetEmployeeCount()

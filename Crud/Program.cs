@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<StripePaymentService>();
+builder.Services.AddScoped<PaymentService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -42,6 +42,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 builder.Services.AddScoped<ISP_EmployeeService, SP_EmployeeService>();
 builder.Services.AddScoped<IEmployeeJobService, EmployeeJobService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 //builder.Services.AddScoped<SP_EmployeeService>();
 // OR if using interface-based DI
 // builder.Services.AddScoped<ISP_EmployeeService, SP_EmployeeService>();

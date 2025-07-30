@@ -47,32 +47,32 @@ namespace Crud.Service
         }
 
 
-        public Session CreateCheckout(List<ProductViewModel> products, string successUrl, string cancelUrl)
-        {
-            var options = new SessionCreateOptions
-            {
-                PaymentMethodTypes = new List<string> { "card" },
-                LineItems = products.Select(p => new SessionLineItemOptions
-                {
-                    PriceData = new SessionLineItemPriceDataOptions
-                    {
-                        Currency = "usd",
-                        UnitAmount = p.PriceInCents,
-                        ProductData = new SessionLineItemPriceDataProductDataOptions
-                        {
-                            Name = p.Name
-                        }
-                    },
-                    Quantity = 1
-                }).ToList(),
-                Mode = "payment",
-                SuccessUrl = successUrl,
-                CancelUrl = cancelUrl,
-            };
+        //public Session CreateCheckout(List<ProductViewModel> products, string successUrl, string cancelUrl)
+        //{
+        //    var options = new SessionCreateOptions
+        //    {
+        //        PaymentMethodTypes = new List<string> { "card" },
+        //        LineItems = products.Select(p => new SessionLineItemOptions
+        //        {
+        //            PriceData = new SessionLineItemPriceDataOptions
+        //            {
+        //                Currency = "usd",
+        //                UnitAmount = p.PriceInCentsInt,
+        //                ProductData = new SessionLineItemPriceDataProductDataOptions
+        //                {
+        //                    Name = p.Name
+        //                }
+        //            },
+        //            Quantity = 1
+        //        }).ToList(),
+        //        Mode = "payment",
+        //        SuccessUrl = successUrl,
+        //        CancelUrl = cancelUrl,
+        //    };
 
-            var service = new SessionService();
-            return service.Create(options);
-        }
+        //    var service = new SessionService();
+        //    return service.Create(options);
+        //}
 
     }
 

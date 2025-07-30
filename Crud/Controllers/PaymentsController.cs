@@ -1,6 +1,8 @@
 ﻿using Crud.Service;
 using Crud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
+using System.Globalization;
 
 namespace Crud.Controllers
 {
@@ -11,46 +13,63 @@ namespace Crud.Controllers
 
     public class PaymentsController : ControllerBase
     {
-        private readonly StripePaymentService _stripePaymentService;
+        private readonly PaymentService _stripePaymentService;
 
-        public PaymentsController(StripePaymentService stripePaymentService)
+        public PaymentsController(PaymentService stripePaymentService)
         {
             _stripePaymentService = stripePaymentService;
         }
 
-        [HttpGet("products")]
-        public IActionResult GetProducts()
-        {
-            var products = new List<ProductViewModel>
-            {
-                new() { Name = "Shirt", PriceInCents = 2000 },
-                new() { Name = "Book", PriceInCents = 1500 },
-                new() { Name = "Mug", PriceInCents = 1000 }
-            };
-
-            return Ok(products);
-        }
-
         [HttpPost("create-checkout-session")]
-        public IActionResult CreateCheckoutSession()
+        public async Task<IActionResult> CreateCheckoutSession()
         {
             var successUrl = "https://localhost:5001/success";
             var cancelUrl = "https://localhost:5001/cancel";
 
-            var session = _stripePaymentService.CreateCheckoutSession(successUrl, cancelUrl);
+            var session = await _stripePaymentService.CreateCheckoutSession(successUrl, cancelUrl);
             return Ok(new { sessionId = session.Id, url = session.Url });
         }
 
         [HttpPost("create-checkout")]
-        public IActionResult CreateCheckoutSession([FromBody] List<ProductViewModel> selectedProducts)
+        public async Task<IActionResult> CreateCheckoutSession([FromBody] List<CheckoutViewModel> selectedProducts)
         {
             var successUrl = "http://localhost:3000/success";
             var cancelUrl = "http://localhost:3000/cancel";
 
-            var session = _stripePaymentService.CreateCheckout(selectedProducts, successUrl, cancelUrl);
+            var session = await _stripePaymentService.CreateCheckout(selectedProducts, successUrl, cancelUrl);
 
             return Ok(new { sessionId = session.Id, url = session.Url });
         }
+
+        [HttpGet("transactions")]
+        public IActionResult GetTransactions()
+        {
+            var transactions = _stripePaymentService.GetTransactions();
+            return Ok(transactions);
+        }
+
+
+        [HttpPost("refund")]
+        public async Task<IActionResult> Refund([FromBody] RefundRequest request)
+        {
+            var refund = await _stripePaymentService.RefundCharge(request.ChargeId);
+            return Ok(refund);
+        }
+
+        [HttpGet("transactions/summary")]
+        public IActionResult GetTransactionSummary()
+        {
+            var summary = _stripePaymentService.GetTransactionSummary();
+            return Ok(summary);
+        }
+
+        [HttpGet("balance")]
+        public async Task<IActionResult> GetTotalBalance()
+        {
+            var balance = await _stripePaymentService.GetStripeBalanceAsync();
+            return Ok(balance);
+        }
+
 
     }
 

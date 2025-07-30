@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Text;
+using Crud.Contracts;
 
 namespace Crud.Controllers
 {
@@ -16,16 +17,19 @@ namespace Crud.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        //- It is used to store the injected database context instance for use throughout the controller.
+        //- It is used to store the injected database context instance   for use throughout the controller.
         private readonly ApplicationDBContext dbContext;
 
         private readonly IHubContext<EmployeeHub> _hubContext;
 
-        public EmployeesController(ApplicationDBContext dbContext, IHubContext<EmployeeHub> hubContext)
+        private readonly IEmployeeService _employeeService;
+
+        public EmployeesController(ApplicationDBContext dbContext, IHubContext<EmployeeHub> hubContext , IEmployeeService employeeService)
         {
             //- The parameter dbContext is assigned to the private field this.dbContext, making it available throughout the controller.
             this.dbContext = dbContext;
             _hubContext = hubContext;
+            _employeeService = employeeService;
         }
 
         //[HttpGet("employees")]
@@ -127,7 +131,7 @@ namespace Crud.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult AddEmployee(AddEmployeeDto addEmployeeDto)
+        public IActionResult AddEmployee([FromBody] AddEmployeeDto addEmployeeDto)
         {
             var employeeEntity = new Employee()
             {
@@ -136,15 +140,28 @@ namespace Crud.Controllers
                 Phone = addEmployeeDto.Phone,
                 Salary = addEmployeeDto.Salary,
                 DepartmentId = addEmployeeDto.DepartmentId,
-                CreatedDate = addEmployeeDto.CreatedDate,
+                CreatedDate = DateTime.UtcNow
             };
+
             dbContext.Employees.Add(employeeEntity);
             dbContext.SaveChanges();
 
-            // Broadcast to all connected clients
             _hubContext.Clients.All.SendAsync("EmployeeAdded", employeeEntity);
 
             return Ok(employeeEntity);
+        }
+
+
+        [HttpGet("count")]
+        public IActionResult GetEmployeeCount()
+        {
+            int employeeCount = _employeeService.GetEmployeeCount();
+            int departmentCount = _employeeService.GetDepartmentCount();
+            return Ok(new { 
+                emp = employeeCount,
+                dept = departmentCount
+
+            });
         }
 
         [HttpGet("export")]

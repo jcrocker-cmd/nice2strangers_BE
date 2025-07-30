@@ -43,9 +43,8 @@ builder.Services.AddScoped<ISP_EmployeeService, SP_EmployeeService>();
 builder.Services.AddScoped<IEmployeeJobService, EmployeeJobService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
-//builder.Services.AddScoped<SP_EmployeeService>();
-// OR if using interface-based DI
-// builder.Services.AddScoped<ISP_EmployeeService, SP_EmployeeService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
 
 // Add Hangfire services
 builder.Services.AddHangfire(config =>
@@ -75,7 +74,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-// Enable CORS for your React app
+// Enable serving static files like images, CSS, JS, etc.
+app.UseStaticFiles();
 app.UseCors("AllowViteDev");
 app.UseAuthorization();
 app.MapControllers();

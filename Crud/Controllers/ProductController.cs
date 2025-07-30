@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Crud.ViewModel;
-using Crud.Models.Entities;
-using Crud.Data;
+﻿using Crud.ViewModel;
+using Microsoft.AspNetCore.Mvc;
+using Crud.Service;
 
 namespace Crud.Controllers
 {
@@ -9,38 +8,24 @@ namespace Crud.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ApplicationDBContext dbContext;
-        public ProductController(ApplicationDBContext dbContext)
+        private readonly ProductService _productService;
+        public ProductController(ProductService productService)
         {
-            this.dbContext = dbContext;
+           _productService = productService;
         }
 
         [HttpPost("addProduct")]
         public async Task<IActionResult> AddProduct([FromForm] ProductViewModel productViewModel)
         {
-            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-            Directory.CreateDirectory(uploadsFolder);
-
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(productViewModel.Image.FileName);
-            var filePath = Path.Combine(uploadsFolder, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await productViewModel.Image.CopyToAsync(stream);
-            }
-
-            var product = new Product
-            {
-                ProductName = productViewModel.ProductName,
-                PriceInCents = productViewModel.PriceInCents,
-                Image = $"/uploads/{fileName}",
-                isActive = true
-            };
-
-            dbContext.Products.Add(product);
-            await dbContext.SaveChangesAsync();
-
+            var product = await _productService.AddProduct(productViewModel);
             return Ok(product);
+        }
+
+        [HttpGet("products")]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            var allProducts = await _productService.GetAllAsync(); 
+            return Ok(allProducts);
         }
 
     }

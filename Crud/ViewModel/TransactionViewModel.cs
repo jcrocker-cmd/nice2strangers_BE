@@ -15,6 +15,9 @@
         public string CardBrand { get; set; }
         public string Last4 { get; set; }
         public string DeclineReason { get; set; }
+        public string ProductName { get; set; }
+        public string Quantity { get; set; }
+
     }
 
 }

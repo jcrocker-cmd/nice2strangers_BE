@@ -20,19 +20,6 @@ namespace Crud.Controllers
             _stripePaymentService = stripePaymentService;
         }
 
-        //[HttpGet("products")]
-        //public IActionResult GetProducts()
-        //{
-        //    var products = new List<ProductViewModel>
-        //    {
-        //        new() { Name = "Shirt", PriceInCents = 2000 },
-        //        new() { Name = "Book", PriceInCents = 1500 },
-        //        new() { Name = "Mug", PriceInCents = 1000 }
-        //    };
-
-        //    return Ok(products);
-        //}
-
         [HttpPost("create-checkout-session")]
         public async Task<IActionResult> CreateCheckoutSession()
         {
@@ -44,7 +31,7 @@ namespace Crud.Controllers
         }
 
         [HttpPost("create-checkout")]
-        public async Task<IActionResult> CreateCheckoutSession([FromBody] List<ProductViewModel> selectedProducts)
+        public async Task<IActionResult> CreateCheckoutSession([FromBody] List<CheckoutViewModel> selectedProducts)
         {
             var successUrl = "http://localhost:3000/success";
             var cancelUrl = "http://localhost:3000/cancel";
@@ -77,7 +64,7 @@ namespace Crud.Controllers
         }
 
         [HttpGet("balance")]
-        public async Task<IActionResult> GetTotalBalnce()
+        public async Task<IActionResult> GetTotalBalance()
         {
             var balance = await _stripePaymentService.GetStripeBalanceAsync();
             return Ok(balance);

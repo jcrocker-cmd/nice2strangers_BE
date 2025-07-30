@@ -8,7 +8,7 @@ namespace Crud.Contracts
     {
 
         Task<Session> CreateCheckoutSession(string successUrl, string cancelUrl);
-        Task<Session> CreateCheckout(List<ProductViewModel> products, string successUrl, string cancelUrl);
+        Task<Session> CreateCheckout(List<CheckoutViewModel> products, string successUrl, string cancelUrl);
         List<Charge> GetPayments();
         Task<Refund> RefundCharge(string chargeId);
         TransactionSummaryViewModel GetTransactionSummary();

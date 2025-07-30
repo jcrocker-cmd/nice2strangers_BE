@@ -49,7 +49,7 @@ namespace Crud.Service
         }
 
 
-        public async Task<Session> CreateCheckout(List<ProductViewModel> products, string successUrl, string cancelUrl)
+        public async Task<Session> CreateCheckout(List<CheckoutViewModel> products, string successUrl, string cancelUrl)
         {
             var options = new SessionCreateOptions
             {
@@ -62,7 +62,12 @@ namespace Crud.Service
                         UnitAmount = p.PriceInCents,
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = p.Name
+                            Name = p.ProductName,
+                            Metadata = new Dictionary<string, string>
+                            {
+                              { "product_name", p.ProductName },
+                              { "quantity", "1" }
+                            }
                         }
                     },
                     Quantity = 1
@@ -135,7 +140,9 @@ namespace Crud.Service
                 CustomerName = c.BillingDetails?.Name,
                 CardBrand = c.PaymentMethodDetails?.Card?.Brand,
                 Last4 = c.PaymentMethodDetails?.Card?.Last4,
-                DeclineReason = c.FailureMessage
+                DeclineReason = c.FailureMessage,
+                ProductName = c.Metadata.ContainsKey("product_name") ? c.Metadata["product_name"] : null,
+                Quantity = c.Metadata.ContainsKey("quantity") ? c.Metadata["quantity"] : null
             });
 
             return results;

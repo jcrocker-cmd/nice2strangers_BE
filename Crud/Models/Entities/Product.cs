@@ -10,5 +10,10 @@ namespace Crud.Models.Entities
         public string Image { get; set; }
         public bool? isActive{ get; set; }
 
+        //Category
+        //Description
+        //stocks
+        //created at
+
     }
 }

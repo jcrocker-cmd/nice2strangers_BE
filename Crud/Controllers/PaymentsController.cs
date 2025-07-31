@@ -1,4 +1,4 @@
-﻿using Crud.Service;
+﻿using Crud.Contracts;
 using Crud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
@@ -13,9 +13,9 @@ namespace Crud.Controllers
 
     public class PaymentsController : ControllerBase
     {
-        private readonly PaymentService _stripePaymentService;
+        private readonly IPaymentService _stripePaymentService;
 
-        public PaymentsController(PaymentService stripePaymentService)
+        public PaymentsController(IPaymentService stripePaymentService)
         {
             _stripePaymentService = stripePaymentService;
         }

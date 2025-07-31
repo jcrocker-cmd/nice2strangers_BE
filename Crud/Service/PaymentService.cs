@@ -11,11 +11,13 @@ namespace Crud.Service
     public class PaymentService : IPaymentService
     {
         private readonly IConfiguration _config;
+        private readonly IEmailService _emailService;
 
-        public PaymentService(IConfiguration config)
+        public PaymentService(IConfiguration config, IEmailService emailService)
         {
             _config = config;
             StripeConfiguration.ApiKey = _config["Stripe:SecretKey"];
+            _emailService = emailService;
         }
 
         public async Task<Session> CreateCheckoutSession(string successUrl, string cancelUrl)
@@ -104,8 +106,37 @@ namespace Crud.Service
             };
 
             var refund = await refundService.CreateAsync(refundOptions);
+
+            // Get charge details
+            var chargeService = new ChargeService();
+            var charge = await chargeService.GetAsync(chargeId);
+
+            // Extract necessary info
+            var buyerEmail = charge.BillingDetails?.Email ?? charge.ReceiptEmail;
+            var amount = charge.Amount / 100.0m; // Stripe amount is in cents
+            var currency = charge.Currency.ToUpper();
+            var description = charge.Description ?? "No description";
+
+            // Compose email
+            string subject = "Refund Processed";
+            string body = $"Your refund has been processed.\n\n" +
+                          $"Product: {description}\n" +
+                          $"Amount Refunded: {amount} {currency}\n" +
+                          $"Charge ID: {chargeId}";
+
+            // Send email to buyer
+            if (!string.IsNullOrEmpty(buyerEmail))
+            {
+                await _emailService.SendEmailAsync(buyerEmail, subject, body);
+            }
+
+            // Send email to admin
+            string adminEmail = "admin@example.com"; // Replace with your admin email or config value
+            await _emailService.SendEmailAsync(adminEmail, $"Admin Notification - {subject}", body);
+
             return refund;
         }
+
 
         public TransactionSummaryViewModel GetTransactionSummary()
         {

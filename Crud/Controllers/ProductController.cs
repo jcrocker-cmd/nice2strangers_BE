@@ -1,6 +1,6 @@
 ﻿using Crud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using Crud.Service;
+using Crud.Contracts;
 
 namespace Crud.Controllers
 {
@@ -8,8 +8,8 @@ namespace Crud.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ProductService _productService;
-        public ProductController(ProductService productService)
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
            _productService = productService;
         }

@@ -17,14 +17,14 @@ namespace Crud.Service
 
         public class EmailTemplateBuilder
         {
-            public string BuildContactEmailTemplate(string body)
+            public string BuildContactEmailTemplate(string body, string subject)
         {
               return $@"
                 <!DOCTYPE html>
                 <html lang=""en"">
                 <head>
                     <meta charset=""UTF-8"">
-                    <title>New Contact Message</title>
+                    <title>{subject}</title>
                 </head>
                 <body style=""margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;"">
                     <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""padding: 30px 0;"">
@@ -44,7 +44,7 @@ namespace Crud.Service
                                     <!-- Content -->
                                     <tr>
                                         <td style=""padding: 30px;"">
-                                            <h2 style=""color: #333;"">New Contact Form Message</h2>
+                                            <h2 style=""color: #333;"">{subject}</h2>
 
                                             {body}
                                         </td>
@@ -67,13 +67,16 @@ namespace Crud.Service
         }
 
 
-        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        public async Task SendEmailAsync(string toEmail, string subject, string rawBody)
         {
-            var email = new MimeKit.MimeMessage();
-            email.From.Add(new MimeKit.MailboxAddress(_smtpSettings.SenderName, _smtpSettings.Email));
-            email.To.Add(MimeKit.MailboxAddress.Parse(toEmail));
+            var template = new EmailTemplateBuilder();
+            string finalHtml = template.BuildContactEmailTemplate(rawBody, subject);
+
+            var email = new MimeMessage();
+            email.From.Add(new MailboxAddress(_smtpSettings.SenderName, _smtpSettings.Email));
+            email.To.Add(MailboxAddress.Parse(toEmail));
             email.Subject = subject;
-            email.Body = new TextPart("html") { Text = message };
+            email.Body = new TextPart("html") { Text = finalHtml };
 
             using var smtp = new SmtpClient();
             await smtp.ConnectAsync(_smtpSettings.Host, _smtpSettings.Port, SecureSocketOptions.StartTls);
@@ -81,5 +84,6 @@ namespace Crud.Service
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
         }
+
     }
 }

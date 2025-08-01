@@ -1,9 +1,11 @@
-﻿using Crud.ViewModel;
+﻿using Crud.Contracts;
+using Crud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Stripe.Checkout;
+using System.Collections.Generic;
 using System.Globalization;
-using Crud.Contracts;
+using Crud;
 
 
 namespace Crud.Service
@@ -53,6 +55,7 @@ namespace Crud.Service
 
         public async Task<Session> CreateCheckout(List<CheckoutViewModel> products, string successUrl, string cancelUrl)
         {
+
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string> { "card" },
@@ -112,27 +115,27 @@ namespace Crud.Service
             var charge = await chargeService.GetAsync(chargeId);
 
             // Extract necessary info
-            var buyerEmail = charge.BillingDetails?.Email ?? charge.ReceiptEmail;
+            var CustomerEmail = charge.BillingDetails?.Email ?? charge.ReceiptEmail;
+            var CustomerName = charge.BillingDetails?.Name;
+            var CardBrand = charge.PaymentMethodDetails?.Card?.Brand;
+            var Last4 = charge.PaymentMethodDetails?.Card?.Last4;
             var amount = charge.Amount / 100.0m; // Stripe amount is in cents
             var currency = charge.Currency.ToUpper();
             var description = charge.Description ?? "No description";
+            string receiptUrl = charge.ReceiptUrl;
 
             // Compose email
-            string subject = "Refund Processed";
-            string body = $"Your refund has been processed.\n\n" +
-                          $"Product: {description}\n" +
-                          $"Amount Refunded: {amount} {currency}\n" +
-                          $"Charge ID: {chargeId}";
+            string subject = Constants.Subject.Refund;
+            string body = Constants.GetRefundEmailBody(chargeId, receiptUrl, CustomerEmail, CustomerName, CardBrand, Last4, description, amount, currency);
 
             // Send email to buyer
-            if (!string.IsNullOrEmpty(buyerEmail))
+            if (!string.IsNullOrEmpty(CustomerEmail))
             {
-                await _emailService.SendEmailAsync(buyerEmail, subject, body);
+                await _emailService.SendEmailAsync(CustomerEmail, subject, body);
             }
 
             // Send email to admin
-            string adminEmail = "admin@example.com"; // Replace with your admin email or config value
-            await _emailService.SendEmailAsync(adminEmail, $"Admin Notification - {subject}", body);
+            await _emailService.SendEmailAsync(Constants.AdminEmail, $"Admin Notification - {subject}", body);
 
             return refund;
         }

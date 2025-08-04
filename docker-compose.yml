@@ -26,5 +26,12 @@ services:
       - sql_data:/var/opt/mssql
     restart: always
 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8084:8080
+
 volumes:
   sql_data:
+

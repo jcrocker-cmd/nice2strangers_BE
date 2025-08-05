@@ -4,9 +4,7 @@ using Crud.Service;
 using Microsoft.EntityFrameworkCore;
 using Hangfire;
 using Hangfire.SqlServer;
-{
-    
-}
+using Crud.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,11 +58,19 @@ builder.Services.AddHangfire(config =>
     });
 });
 
+
 builder.Services.AddHangfireServer();
 
 builder.Services.AddSignalR();
 
 var app = builder.Build();
+
+//No Need Update Database
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+    dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

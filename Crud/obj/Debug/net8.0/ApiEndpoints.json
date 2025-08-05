@@ -132,6 +132,16 @@
   },
   {
     "ContainingType": "Crud.Controllers.EmployeesController",
+    "Method": "GetEmployeeCount",
+    "RelativePath": "api/Employees/count",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.EmployeesController",
     "Method": "AddEmployee",
     "RelativePath": "api/Employees/create",
     "HttpMethod": "POST",
@@ -196,6 +206,119 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.PaymentsController",
+    "Method": "GetTotalBalance",
+    "RelativePath": "api/Payments/balance",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.PaymentsController",
+    "Method": "CreateCheckoutSession",
+    "RelativePath": "api/Payments/create-checkout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "selectedProducts",
+        "Type": "System.Collections.Generic.List\u00601[[Crud.ViewModel.CheckoutViewModel, Crud, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.PaymentsController",
+    "Method": "CreateCheckoutSession",
+    "RelativePath": "api/Payments/create-checkout-session",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.PaymentsController",
+    "Method": "Refund",
+    "RelativePath": "api/Payments/refund",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Crud.ViewModel.RefundRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.PaymentsController",
+    "Method": "GetTransactions",
+    "RelativePath": "api/Payments/transactions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.PaymentsController",
+    "Method": "GetTransactionSummary",
+    "RelativePath": "api/Payments/transactions/summary",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.ProductController",
+    "Method": "AddProduct",
+    "RelativePath": "api/Product/addProduct",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ProductName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PriceInCents",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "Image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "isActive",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Crud.Controllers.ProductController",
+    "Method": "GetAllProducts",
+    "RelativePath": "api/Product/products",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

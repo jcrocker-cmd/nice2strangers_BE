@@ -142,6 +142,7 @@ C:\Users\John\source\repos\Crud\Crud\obj\Debug\net8.0\Crud.genruntimeconfig.cach
 C:\Users\John\source\repos\Crud\Crud\obj\Debug\net8.0\ref\Crud.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\appsettings.json
+C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Crud.staticwebassets.runtime.json
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Crud.staticwebassets.endpoints.json
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Crud.exe
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Crud.deps.json
@@ -188,10 +189,10 @@ C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\MimeKit.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Stripe.net.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -203,15 +204,12 @@ C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Co
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Composition.Runtime.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Composition.TypedParts.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Drawing.Common.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Memory.Data.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Runtime.Caching.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Security.Permissions.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\System.Windows.Extensions.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\ca\Hangfire.Core.resources.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\de\Hangfire.Core.resources.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\es\Hangfire.Core.resources.dll
@@ -284,13 +282,8 @@ C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\obj\Debug\net8.0\Crud.csproj.AssemblyReference.cache
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\obj\Debug\net8.0\Crud.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Owner\Documents\HRMS\MY FILES\.net-crud\Crud\obj\Debug\net8.0\Crud.AssemblyInfoInputs.cache

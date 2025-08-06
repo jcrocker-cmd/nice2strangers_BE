@@ -26,7 +26,9 @@ namespace Crud.Service
                     ProductName = p.ProductName,
                     PriceInCents = p.PriceInCents,
                     Image = p.Image,
-                    isActive = p.isActive
+                    isActive = p.isActive,
+                    CreatedDate = p.CreatedDate.ToString()
+
                 })
                 .ToListAsync();
         }
@@ -47,9 +49,13 @@ namespace Crud.Service
             var product = new Product
             {
                 ProductName = productViewModel.ProductName,
+                Category = productViewModel.Category,
+                Description = productViewModel.Description,
+                Stocks = productViewModel.Stocks,
                 PriceInCents = (int)(productViewModel.PriceInCents * 100),
                 Image = $"/uploads/{fileName}",
-                isActive = true
+                isActive = true,
+                CreatedDate = DateTime.UtcNow
             };
 
             dbContext.Products.Add(product);

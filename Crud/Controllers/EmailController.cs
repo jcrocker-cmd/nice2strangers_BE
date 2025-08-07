@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Crud.Contracts;
+﻿using Crud.Contracts;
 using Crud.Models;
+using Crud.Service;
+using Crud.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.Controllers
 {
@@ -24,6 +26,15 @@ namespace Crud.Controllers
 
             await _emailService.SendEmailAsync(request.ToEmail, request.Subject, request.Body);
             return Ok("Email Sent");
+        }
+
+        [HttpPost("sendInquiry")]
+        public async Task<IActionResult> Refund([FromBody] EmailRequest request)
+        {
+            var subject = Constants.Subject.Inquiry;
+            var message = request.Body;
+            var name = 
+            return Ok(refund);
         }
     }
 }

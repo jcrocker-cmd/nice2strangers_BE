@@ -29,6 +29,7 @@
         public static class Subject
         {   
             public const string Refund = "Refund Processed";
+            public const string Inquiry = "Inquiry";
         }
 
         public static string GetRefundEmailBody(
@@ -52,6 +53,19 @@
                    $"<span><strong>Product:</strong> {description}</span><br>" +
                    $"<span><strong>Amount Refunded:</strong> {amount} {currency}</span><br><br>" +
                    $"<span><strong>View Receipt URL:</strong> {receiptUrl}</span><br>";
+        }
+
+        public static string ContactUs(
+        string name,
+        string message,
+        string email
+        )
+        {
+            return
+                   $"<span>This email is to confirm that your refund has been issued by Nice2Strangers. It can take approximately 10 days to appear on your statement.If it takes longer please contact your bank for assistance.</span><br><br>" +
+                   $"<span>Customer Name: {name}</span><br>" +
+                   $"<span>Customer Email: {email}</span><br>" +
+                   $"<span><strong>Product:</strong> {message}</span><br>" +
         }
     }
 }

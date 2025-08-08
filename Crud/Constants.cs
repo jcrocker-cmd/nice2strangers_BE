@@ -1,4 +1,9 @@
-﻿namespace Crud
+﻿using Org.BouncyCastle.Pqc.Crypto.Lms;
+using Stripe;
+using System;
+using System.Threading.Tasks;
+
+namespace Crud
 {
     public static class Constants
     {
@@ -65,7 +70,24 @@
                    $"<span>This email is to confirm that your refund has been issued by Nice2Strangers. It can take approximately 10 days to appear on your statement.If it takes longer please contact your bank for assistance.</span><br><br>" +
                    $"<span>Customer Name: {name}</span><br>" +
                    $"<span>Customer Email: {email}</span><br>" +
-                   $"<span><strong>Product:</strong> {message}</span><br>" +
+                   $"<span><strong>Product:</strong> {message}</span><br>";
+        }
+
+
+        public static string ContactUsClient(
+        string name
+        )
+        {
+            return
+                    $"<span> Hello, <strong>{name}</strong></span><br><br>" +
+                    $"<span> Thank you for contacting Nice2Strangers!We've received your message and appreciate you reaching out to us.</span><br><br>" +
+                    $"<span> Our customer service team has your inquiry and we'll get back to you right away with a response. <br><br>You can expect to hear from us within the next 2-4 hours during business hours.</span><br>" +
+                    $"<span>If you have any urgent questions in the meantime, feel free to reply to this email or check our FAQ section on our website.</span><br><br>" +
+                    $"<span>We look forward to assisting you!</span><br><br>" +
+                    $"<span>Best regards,</span><br><br>" +
+                    $"<span>Nice2Strangers Customer Service Team</span><br>" +
+                    $"<span>Email: support@nice2strangers.com</span><br>" +
+                    $"<span>Hours: Monday-Friday 8AM-6PM EST</span><br>";
         }
     }
 }

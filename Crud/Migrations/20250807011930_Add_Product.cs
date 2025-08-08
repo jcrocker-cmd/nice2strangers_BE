@@ -15,15 +15,19 @@ namespace Crud.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PriceInCents = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Product_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Stocks = table.Column<int>(type: "int", nullable: false),
+                    Price_In_Cents = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                    Is_Active = table.Column<bool>(type: "bit", nullable: true),
+                    Created_Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.ID);
                 });
         }
 

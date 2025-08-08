@@ -1,9 +1,10 @@
-﻿using Crud.Data;
+﻿using Crud.Contracts;
+using Crud.Data;
 using Crud.Models;
 using Crud.Models.Entities;
 using Crud.ViewModel;
 using Microsoft.EntityFrameworkCore;
-using Crud.Contracts;
+using System.Globalization;
 
 
 namespace Crud.Service
@@ -23,12 +24,14 @@ namespace Crud.Service
                 .Select(p => new ProductDto
                 {
                     Id = p.Id,
+                    Category = p.Category,
+                    Description = p.Description,
+                    Stocks = p.Stocks,
                     ProductName = p.ProductName,
                     PriceInCents = p.PriceInCents,
                     Image = p.Image,
                     isActive = p.isActive,
-                    CreatedDate = p.CreatedDate.ToString()
-
+                    CreatedDate = p.CreatedDate.ToString("MMM, dd, yyyy h:mmtt", CultureInfo.InvariantCulture)
                 })
                 .ToListAsync();
         }
@@ -51,7 +54,7 @@ namespace Crud.Service
                 ProductName = productViewModel.ProductName,
                 Category = productViewModel.Category,
                 Description = productViewModel.Description,
-                Stocks = productViewModel.Stocks,
+                Stocks = (int) productViewModel.Stocks,
                 PriceInCents = (int)(productViewModel.PriceInCents * 100),
                 Image = $"/uploads/{fileName}",
                 isActive = true,

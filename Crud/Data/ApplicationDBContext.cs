@@ -24,6 +24,8 @@ namespace Crud.Data
         //<Employee> from Model/Entity
         //Employess represents table toa allow CRUD operations
         public DbSet<Employee> Employees{ get; set; }
+        public DbSet<ContactUs> ContactUs{ get; set; }
+        public DbSet<Newsletter> Newsletter { get; set; }
         public DbSet<SP_Employee> SP_Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Product> Products { get; set; }

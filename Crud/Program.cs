@@ -24,8 +24,6 @@ builder.Services.AddCors(options =>
     });
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
-builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<PaymentService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -42,6 +40,9 @@ builder.Services.AddScoped<IEmployeeJobService, EmployeeJobService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<INewsletterService, NewsletterService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 
 // Add Hangfire services

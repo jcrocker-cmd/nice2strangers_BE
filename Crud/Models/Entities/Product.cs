@@ -33,5 +33,8 @@ namespace Crud.Models.Entities
         [Column("Created_Date")]
         public DateTime CreatedDate { get; set; }
 
+        [Column("Updated_Date")]
+        public DateTime UpdatedDate { get; set; }
+
     }
 }

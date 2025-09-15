@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Crud.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250807011930_Add_Product")]
-    partial class Add_Product
+    [Migration("20250915023255_Product")]
+    partial class Product
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,42 @@ namespace Crud.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Crud.Models.Entities.ContactUs", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ID");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Created_Date");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Email");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Message");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Subject");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactUs");
+                });
 
             modelBuilder.Entity("Crud.Models.Entities.Department", b =>
                 {
@@ -84,6 +120,32 @@ namespace Crud.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("Crud.Models.Entities.Newsletter", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ID");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Created_Date");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Email");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Newsletter");
+                });
+
             modelBuilder.Entity("Crud.Models.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -122,6 +184,10 @@ namespace Crud.Migrations
                     b.Property<int>("Stocks")
                         .HasColumnType("int")
                         .HasColumnName("Stocks");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Updated_Date");
 
                     b.Property<bool?>("isActive")
                         .HasColumnType("bit")

@@ -66,5 +66,85 @@ namespace Crud.Service
 
             return product;
         }
+
+        public async Task<Product?> UpdateProduct(Guid id, ProductViewModel productViewModel)
+        {
+            var product = await dbContext.Products.FindAsync(id);
+            if (product == null)
+                return null;
+
+            product.ProductName = productViewModel.ProductName;
+            product.Category = productViewModel.Category;
+            product.Description = productViewModel.Description;
+            product.Stocks = (int)productViewModel.Stocks;
+            product.PriceInCents = (int)(productViewModel.PriceInCents * 100);
+
+            if (productViewModel.Image != null)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(productViewModel.Image.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await productViewModel.Image.CopyToAsync(stream);
+                }
+
+                product.Image = $"/uploads/{fileName}";
+            }
+
+            product.UpdatedDate = DateTime.UtcNow;
+            await dbContext.SaveChangesAsync();
+
+            return product;
+        }
+
+
+        public async Task<Product?> GetProductById(Guid id)
+        {
+            return await dbContext.Products.FindAsync(id);
+        }
+
+        public async Task<Product?> SoftDeleteProduct(Guid id)
+        {
+            var product = await dbContext.Products.FindAsync(id);
+            if (product == null) return null;
+
+            product.isActive = false;
+            product.UpdatedDate = DateTime.UtcNow;
+
+            await dbContext.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<Product?> RecoverProduct(Guid id)
+        {
+            var product = await dbContext.Products.FindAsync(id);
+            if (product == null) return null;
+
+            product.isActive = true;
+            product.UpdatedDate = DateTime.UtcNow;
+
+            await dbContext.SaveChangesAsync();
+            return product;
+        }
+
+
+        public async Task<ProductCountsViewModel> GetProductCountsAsync()
+        {
+            var activeCount = await dbContext.Products.CountAsync(p => p.isActive == true);
+            var inactiveCount = await dbContext.Products.CountAsync(p => p.isActive == false);
+            var totalCount = await dbContext.Products.CountAsync();
+
+            return new ProductCountsViewModel
+            {
+                Active = activeCount,
+                Inactive = inactiveCount,
+                Total = totalCount
+            };
+        }
+
     }
 }

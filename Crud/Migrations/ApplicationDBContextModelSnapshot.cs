@@ -182,6 +182,10 @@ namespace Crud.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Stocks");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Updated_Date");
+
                     b.Property<bool?>("isActive")
                         .HasColumnType("bit")
                         .HasColumnName("Is_Active");

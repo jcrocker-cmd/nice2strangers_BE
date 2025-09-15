@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Crud.Migrations
 {
     /// <inheritdoc />
-    public partial class Add_Product : Migration
+    public partial class Product : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +23,8 @@ namespace Crud.Migrations
                     Price_In_Cents = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Is_Active = table.Column<bool>(type: "bit", nullable: true),
-                    Created_Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Created_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated_Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

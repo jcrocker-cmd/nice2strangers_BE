@@ -49,7 +49,13 @@ namespace Crud.Controllers
 
             if (!string.IsNullOrEmpty(email))
             {
-                await _emailService.SendEmailAsync(email, subject, body);
+                
+                try { 
+                    await _emailService.SendEmailAsync(email, subject, body); 
+                }
+                catch(Exception ex) {
+                    var err = ex;
+                }
             }
 
             await _emailService.SendEmailAsync(Constants.AdminEmail, $"Admin Notification - {subject}", adminBody);
@@ -99,5 +105,39 @@ namespace Crud.Controllers
             var newsletter = await _newsletterService.GetNewsletterAsync();
             return Ok(newsletter);
         }
+
+        [HttpPost("sendNewsLetter")]
+        public async Task<IActionResult> SendNewsletter([FromBody] SendNewsletterRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Subject) || string.IsNullOrWhiteSpace(request.Body))
+                return BadRequest("Subject and body are required.");
+
+            var subscribers = await dbContext.Newsletter.ToListAsync();
+            foreach (var subscriber in subscribers)
+            {
+                // personalize
+                var personalizedBody = request.Body.Replace("{{Name}}", subscriber.Name ?? "Subscriber");
+
+                try
+                {
+                    await _emailService.SendEmailAsync(
+                        subscriber.Email,
+                        request.Subject,
+                        personalizedBody
+                    );
+                }
+                catch (Exception ex)
+                {
+                    // log or collect failed emails, but continue
+                    Console.WriteLine($"Failed to send to {subscriber.Email}: {ex.Message}");
+                    continue;
+                }
+            }
+
+
+            return Ok("Newsletter sent successfully!");
+        }
+
+
     }
 }

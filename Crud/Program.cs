@@ -41,6 +41,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
+builder.Services.AddScoped<IInquiryService, InquiryService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 
@@ -67,11 +68,11 @@ builder.Services.AddSignalR();
 var app = builder.Build();
 
 //No Need Update Database
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-    dbContext.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+//    dbContext.Database.Migrate();
+//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

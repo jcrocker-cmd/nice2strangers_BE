@@ -19,6 +19,9 @@ namespace Crud.Models.Entities
         [Column("Message")]
         public string Message { get; set; }
 
+        [Column("Is_Replied")]
+        public bool IsReplied { get; set; } = false;
+
         [Column("Created_Date")]
         public DateTime CreatedDate { get; set; }
 

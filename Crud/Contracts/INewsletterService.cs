@@ -7,5 +7,6 @@ namespace Crud.Contracts
     {
         Task<List<NewsletterViewModel>> GetNewsletterAsync();
         Task<Newsletter> PostNewsletter(NewsletterViewModel newsletterViewModel);
+        Task<bool> SendNewsletterAsync(SendNewsletterRequest request);
     }
 }

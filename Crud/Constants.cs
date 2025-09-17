@@ -67,10 +67,9 @@ namespace Crud
         )
         {
             return
-                   $"<span>This email is to confirm that your refund has been issued by Nice2Strangers. It can take approximately 10 days to appear on your statement.If it takes longer please contact your bank for assistance.</span><br><br>" +
-                   $"<span>Customer Name: {name}</span><br>" +
-                   $"<span>Customer Email: {email}</span><br>" +
-                   $"<span><strong>Product:</strong> {message}</span><br>";
+                   $"<span><strong>Customer Name:</strong> {name}</span><br>" +
+                   $"<span><strong>Customer Email</strong> {email}</span><br>" +
+                   $"<span><strong>Message:</strong> {message}</span><br>";
         }
 
 

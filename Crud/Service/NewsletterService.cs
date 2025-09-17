@@ -1,21 +1,24 @@
-﻿using Crud.Data;
+﻿using Crud.Contracts; 
+using Crud.Data;
+using Crud.Models.Entities;
 using Crud.ViewModel;
-using Crud.Contracts; 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
-using Crud.Models.Entities;
 
 namespace Crud.Service
 {
     public class NewsletterService : INewsletterService
     {
+        private readonly IEmailService _emailService;
         public readonly ApplicationDBContext dbContext;
 
-        public NewsletterService(ApplicationDBContext dbContext)
+        public NewsletterService(ApplicationDBContext dbContext, IEmailService _emailService)
         {
           this.dbContext = dbContext;
+          this._emailService = _emailService;
         }
-            public async Task<List<NewsletterViewModel>> GetNewsletterAsync()
+        public async Task<List<NewsletterViewModel>> GetNewsletterAsync()
             {
                 return await dbContext.Newsletter
                 .AsNoTracking()
@@ -44,6 +47,35 @@ namespace Crud.Service
                 return newsletter;
             }
 
+        public async Task<bool> SendNewsletterAsync(SendNewsletterRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Subject) || string.IsNullOrWhiteSpace(request.Body))
+                return false;
+
+            var subscribers = await dbContext.Newsletter.ToListAsync();
+
+            foreach (var subscriber in subscribers)
+            {
+                var personalizedBody = request.Body.Replace("{{Name}}", subscriber.Name ?? "Subscriber");
+
+                try
+                {
+                    await _emailService.SendEmailAsync(
+                        subscriber.Email,
+                        request.Subject,
+                        personalizedBody
+                    );
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to send to {subscriber.Email}: {ex.Message}");
+                    continue;
+                }
+            }
+
+            return true;
         }
+
+    }
 
 }

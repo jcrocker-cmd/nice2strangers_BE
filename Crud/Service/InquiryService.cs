@@ -33,7 +33,7 @@ namespace Crud.Service
 
         public async Task<ContactUs> ContactUsAsync(EmailRequest request)
         {
-            var subject = Constants.Subject.Inquiry;
+            var subject = request.Subject;
             var message = request.Body;
             var name = request.Name;
             var email = request.ToEmail;
@@ -76,10 +76,12 @@ namespace Crud.Service
                 .AsNoTracking()
                 .Select(c => new EmailRequest
                 {
+                    Id = c.Id,
                     Name = c.Name,
                     ToEmail = c.Email,
                     Subject = c.Subject,
                     Body = c.Message,
+                    IsReplied = c.IsReplied,
                     CreatedDate = c.CreatedDate.ToString("MMM, dd, yyyy h:mmtt", CultureInfo.InvariantCulture)
                 })
                 .ToListAsync();

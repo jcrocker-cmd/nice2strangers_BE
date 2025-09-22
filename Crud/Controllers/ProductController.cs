@@ -1,11 +1,13 @@
-﻿using Crud.ViewModel;
+﻿using Crud.Contracts;
+using Crud.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Crud.Contracts;
 
 namespace Crud.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;

@@ -1,16 +1,20 @@
 ﻿using Crud.Contracts;
 using Crud.Data;
+using Crud.Data;
 using Crud.Service;
-using Microsoft.EntityFrameworkCore;
 using Hangfire;
 using Hangfire.SqlServer;
-using Crud.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Crud.Models.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //builder.WebHost.UseUrls("http://0.0.0.0:80");
 
-// Allow CORS
 // Allow CORS
 builder.Services.AddCors(options =>
     {
@@ -22,6 +26,32 @@ builder.Services.AddCors(options =>
                   .AllowCredentials();
         });
     });
+
+// ✅ Add ASP.NET Core Identity
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDBContext>()
+    .AddDefaultTokenProviders();
+//
+
+// JWT Authentication Configuration
+var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
+//
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
@@ -81,8 +111,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
-// Enable serving static files like images, CSS, JS, etc.
 app.UseStaticFiles();
 app.UseCors("AllowViteDev");
 app.UseAuthorization();

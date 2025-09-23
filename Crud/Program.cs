@@ -33,6 +33,20 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 //
 
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromMinutes(10); // token expires in 10 minutes
+});
+
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.CallbackPath = "/api/Auth/google-callback"; // must match Google redirect URI
+    });
+
+
 // JWT Authentication Configuration
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
@@ -42,7 +56,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
-{
+{ 
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,

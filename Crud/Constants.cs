@@ -35,6 +35,7 @@ namespace Crud
         {   
             public const string Refund = "Refund Processed";
             public const string Inquiry = "Inquiry";
+            public const string ResetPassword = "Reset Your Password";
         }
 
         public static string GetRefundEmailBody(
@@ -87,6 +88,20 @@ namespace Crud
                     $"<span>Nice2Strangers Customer Service Team</span><br>" +
                     $"<span>Email: support@nice2strangers.com</span><br>" +
                     $"<span>Hours: Monday-Friday 8AM-6PM EST</span><br>";
+        }
+
+        public static string GetResetPasswordEmailBody(string resetLink, string firstNameOrEmail)
+        {
+            return $@"
+            <p>Hello {firstNameOrEmail},</p>
+            <p>You requested a password reset. Click the button below to set a new password:</p>
+            <p>
+                <a href='{resetLink}' 
+                   style='padding: 10px 20px; background-color: #FBD241; color: #000; text-decoration: none; border-radius: 5px;'>
+                   Reset Password
+                </a>
+            </p>
+            <p>If you didn’t request this, you can ignore this email.</p>";
         }
     }
 }

@@ -1,4 +1,61 @@
-﻿using Crud.Models.Auth;
+﻿//using Crud.Contracts;
+//using Crud.ViewModel.Auth;
+//using Microsoft.AspNetCore.Mvc;
+
+//[ApiController]
+//[Route("api/[controller]")]
+//public class AuthController : ControllerBase
+//{
+//    private readonly IAuthService _authService;
+
+//    public AuthController(IAuthService authService)
+//    {
+//        _authService = authService;
+//    }
+
+//    [HttpPost("register")]
+//    public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
+//    {
+//        var (succeeded, errors) = await _authService.RegisterUserAsync(model);
+//        if (!succeeded) return BadRequest(errors);
+//        return Ok(new { message = "User registered successfully" });
+//    }
+
+//    [HttpPost("register-admin")]
+//    public async Task<IActionResult> RegisterAdmin([FromBody] RegisterViewModel model)
+//    {
+//        var (succeeded, errors) = await _authService.RegisterAdminAsync(model);
+//        if (!succeeded) return BadRequest(errors);
+//        return Ok(new { message = "Admin registered successfully" });
+//    }
+
+//    [HttpPost("login")]
+//    public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+//    {
+//        var result = await _authService.LoginAsync(model);
+//        if (result == null) return Unauthorized(new { message = "Invalid email or password" });
+
+//        return Ok(result);
+//    }
+
+//    [HttpPost("forgot-password")]
+//    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel model)
+//    {
+//        await _authService.ForgotPasswordAsync(model);
+//        return Ok(new { message = "Reset link sent if account exists." });
+//    }
+
+//    [HttpPost("reset-password")]
+//    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel model)
+//    {
+//        var (succeeded, errors) = await _authService.ResetPasswordAsync(model);
+//        if (!succeeded) return BadRequest(errors);
+//        return Ok(new { message = "Password reset successfully" });
+//    }
+//}
+
+
+using Crud.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -6,6 +63,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Crud.Contracts;
+using Crud.ViewModel.Auth;
 
 
 namespace Crud.Controllers
@@ -16,17 +75,21 @@ namespace Crud.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailService _emailService;
         private readonly IConfiguration _config;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AuthController(UserManager<ApplicationUser> userManager, IConfiguration config, RoleManager<IdentityRole> roleManager)
+        public AuthController(UserManager<ApplicationUser> userManager, IEmailService emailService, IConfiguration config, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _config = config;
             _roleManager = roleManager;
+            _emailService = emailService;
+            _signInManager = signInManager;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto model)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
             var user = new ApplicationUser
             {
@@ -51,11 +114,11 @@ namespace Crud.Controllers
             }
             await _userManager.AddToRoleAsync(user, "User");
 
-            return BadRequest(result.Errors);
+            return Ok(new { message = "Account created successfully" });    
         }
 
         [HttpPost("register-admin")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDto model)
+        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterViewModel model)
         {
             var user = new ApplicationUser
             {
@@ -82,7 +145,7 @@ namespace Crud.Controllers
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
@@ -126,25 +189,98 @@ namespace Crud.Controllers
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            // For JWT, usually nothing is stored server-side, so just return OK
             return Ok(new { message = "Logged out successfully" });
         }
 
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return Ok(new { message = "If an account exists with that email, a reset link has been sent." });
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var frontendUrl = "http://localhost:5173/reset-password";
+            var encodedToken = System.Web.HttpUtility.UrlEncode(token);
+            var resetLink = $"{frontendUrl}?token={encodedToken}&email={user.Email}";
+
+            var body = Constants.GetResetPasswordEmailBody(resetLink, user.FirstName ?? user.Email);
+
+            await _emailService.SendEmailAsync(user.Email, Constants.Subject.ResetPassword, body);
+            return Ok(new { message = "Reset link sent to your email." });
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return BadRequest(new { message = "Invalid email" });
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Errors.Select(e => e.Description));
+
+            return Ok(new { message = "Password has been reset successfully" });
+        }
+
+        [HttpGet("google-login")]
+        public IActionResult GoogleLogin()
+        {
+            var redirectUrl = Url.Action("GoogleResponse");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
+            return Challenge(properties, "Google");
+        }
+
+        [HttpGet("google-response")]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null) return BadRequest("Error loading external login information.");
+
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    Email = email,
+                    UserName = email,
+                    FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname)
+                };
+                await _userManager.CreateAsync(user);
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            // generate JWT token same as your login method
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, role)
+                }),
+                Expires = DateTime.UtcNow.AddHours(3),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var jwt = tokenHandler.WriteToken(token);
+
+            // redirect to frontend with token
+            return Redirect($"http://localhost:5173/login?token={jwt}");
+        }
+
+
     }
 
-    public class RegisterDto
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
-    }
 
-    public class LoginModel
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
-    
 }

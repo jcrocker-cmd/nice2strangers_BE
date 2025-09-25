@@ -3,8 +3,9 @@ version: "3.8"
 services:
   crud:
     build:
-      context: .
+      context: .                # root folder
       dockerfile: Crud/Dockerfile
+    container_name: crud-api
     ports:
       - "8083:8080"
     environment:
@@ -12,6 +13,8 @@ services:
       ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=SP_EmployeesDB;User Id=sa;Password=Aug151973!;TrustServerCertificate=True"
     depends_on:
       - sqlserver
+    networks:
+      - proxy
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -25,13 +28,20 @@ services:
     volumes:
       - sql_data:/var/opt/mssql
     restart: always
+    networks:
+      - proxy
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - 8084:8080
+      - "8084:8080"
+    networks:
+      - proxy
 
 volumes:
   sql_data:
 
+networks:
+  proxy:
+    external: true   # same network as nginx-proxy-manager

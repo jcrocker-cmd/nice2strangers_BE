@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowViteDev", policy =>
         {
-            policy.WithOrigins("http://localhost:5173")
+            policy.WithOrigins("https://nice2strangers.org")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
@@ -112,11 +112,11 @@ builder.Services.AddSignalR();
 var app = builder.Build();
 
 //No Need Update Database
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-//    dbContext.Database.Migrate();
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+    dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

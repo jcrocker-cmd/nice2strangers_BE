@@ -20,12 +20,18 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            # Go to backend folder on VPS
+            # If repo is not present, clone it
+            if [ ! -d "/srv/nice2strangers-backend/.git" ]; then
+              git clone https://github.com/jcrocker-cmd/nice2strangers_BE.git /srv/nice2strangers-backend
+            else
+              cd /srv/nice2strangers-backend
+              git reset --hard HEAD
+              git pull origin main
+            fi
+      
+            # Go to backend folder
             cd /srv/nice2strangers-backend
-
-            # Pull latest changes
-            git pull origin main
-
-            # Rebuild and restart backend
+      
+            # Rebuild and restart backend containers
             docker compose down
             docker compose up -d --build

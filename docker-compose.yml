@@ -10,6 +10,7 @@ services:
       - "8083:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_URLS: "http://+:8080"
       ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=nice2strangers;User Id=sa;Password=Aug151973!;TrustServerCertificate=True"
     depends_on:
       - sqlserver

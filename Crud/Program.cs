@@ -87,6 +87,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
 builder.Services.AddScoped<IInquiryService, InquiryService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IJobService, JobService>();
 
 
 
@@ -140,5 +141,7 @@ app.UseHangfireDashboard();
 
 // Schedule the recurring job
 RecurringJob.AddOrUpdate<EmployeeJobService>("add-random-employee",job => job.AddRandomEmployeeAsync(),"0 * * * *");
+
+RecurringJob.AddOrUpdate<JobService>("backup-db", job => job.BackupDatabaseAsync(), "* * * * *");
 
 app.Run();

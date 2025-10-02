@@ -36,6 +36,7 @@ namespace Crud.Service
             {
                 var newsletter = new Newsletter
                 {
+                    Id = Guid.NewGuid(),
                     Name = newsletterViewModel.Name,
                     Email = newsletterViewModel.Email,
                     CreatedDate = DateTime.UtcNow

@@ -1,6 +1,5 @@
 ﻿using Crud.Contracts;
 using Crud.Data;
-using Crud.Data;
 using Crud.Service;
 using Hangfire;
 using Hangfire.SqlServer;
@@ -13,14 +12,12 @@ using Crud.Models.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.WebHost.UseUrls("http://0.0.0.0:80");
-
 // Allow CORS
 builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowViteDev", policy =>
         {
-            policy.WithOrigins("https://nice2strangers.org")
+            policy.WithOrigins("https://nice2strangers.org", "http://localhost:5173")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
@@ -88,6 +85,7 @@ builder.Services.AddScoped<INewsletterService, NewsletterService>();
 builder.Services.AddScoped<IInquiryService, InquiryService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IJobService, JobService>();
+builder.Services.AddScoped<IServicesService, ServicesService>();
 
 
 

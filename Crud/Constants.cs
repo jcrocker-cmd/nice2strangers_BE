@@ -9,6 +9,15 @@ namespace Crud
     {
         public const string AdminEmail = "narbajajc@gmail.com";
 
+        public static class Services
+        {
+            public const string DroneSubject = "Drone Service Inquiry";
+            public const string SMConsulting = "Social Media Consulting Inquiry";
+            public const string SMCreation = "Social Media Creation Inquiry";
+            public const string VideoEditing = "Video Editing Inquiry";
+            public const string Software = "Software Creation Inquiry";
+        }
+
         public static class Common
         {
             public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
@@ -103,5 +112,298 @@ namespace Crud
             </p>
             <p>If you didn’t request this, you can ignore this email.</p>";
         }
+
+
+        public static string AdminServicesEmailTemplate(
+        string customerName,
+        string customerEmail,
+        string serviceType,
+        string location,
+        string budget,
+        string date,
+        string message)
+        {
+            return
+                $"<p>Hey Brandon,</p>" +
+                $"<p><strong>{customerName}</strong> just inquired about <strong>{Constants.Services.DroneSubject}</strong> through the website.</p>" +
+                $"<p>Here are the details of the request:</p>" +
+                $"<ul>" +
+                    $"<li><strong>Name:</strong> {customerName}</li>" +
+                    $"<li><strong>Email:</strong> {customerEmail}</li>" +
+                    $"<li><strong>Service Type:</strong> {serviceType}</li>" +
+                    $"<li><strong>Location:</strong> {location}</li>" +
+                    $"<li><strong>Budget:</strong> {budget}</li>" +
+                    $"<li><strong>Date:</strong> {date}</li>" +
+                    $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul>" +
+                $"<p>Please follow up with {customerName} at <a href=\"mailto:{customerEmail}\">{customerEmail}</a> when you can.</p>" +
+                $"<p>– nice2strangers.org</p>";
+        }
+
+
+        public static string ClientServicesEmailTemplate(
+        string name,
+        string serviceType,
+        string location,
+        string budget,
+        string date,
+        string message)
+            {
+                return
+                    $"<span>Hello, <strong>{name}</strong></span><br><br>" +
+                    $"<span>Thank you for contacting Nice2Strangers! We've received your request and appreciate you reaching out.</span><br><br>" +
+                    $"<span>Here’s a summary of your request:</span><br>" +
+                    $"<ul>" +
+                    $"<li><strong>Service Type:</strong> {serviceType}</li>" +
+                    $"<li><strong>Location:</strong> {location}</li>" +
+                    $"<li><strong>Budget:</strong> {budget}</li>" +
+                    $"<li><strong>Date:</strong> {date}</li>" +
+                    $"<li><strong>Message:</strong> {message}</li>" +
+                    $"</ul><br>" +
+                    $"<span>Our customer service team has received your inquiry and we'll get back to you right away with a response.</span><br>" +
+                    $"<span>You can expect to hear from us within the next 2-4 hours during business hours.</span><br><br>" +
+                    $"<span>If you have urgent questions in the meantime, feel free to reply to this email or check our FAQ section on our website.</span><br><br>" +
+                    $"<span>We look forward to assisting you!</span><br><br>" +
+                    $"<span>Best regards,</span><br>" +
+                    $"<span>Nice2Strangers Customer Service Team</span><br>" +
+                    $"<span>Email: support@nice2strangers.org</span><br>" +
+                    $"<span>Hours: Monday-Friday 8AM-6PM EST</span><br>";
+            }
+
+
+
+        public static string AdminSMConsultingEmailTemplate(
+        string customerName,
+        string customerEmail,
+        string platforms,
+        string goals,
+        string budget,
+        string duration,
+        string message)
+        {
+            return
+                $"<p>Hey Brandon,</p>" +
+                $"<p><strong>{customerName}</strong> just inquired about <strong>{Constants.Services.SMConsulting}</strong> through the website.</p>" +
+                $"<p>Here are the details of the request:</p>" +
+                $"<ul>" +
+                    $"<li><strong>Name:</strong> {customerName}</li>" +
+                    $"<li><strong>Email:</strong> {customerEmail}</li>" +
+                    $"<li><strong>Plaforms:</strong> {platforms}</li>" +
+                    $"<li><strong>Goals:</strong> {goals}</li>" +
+                    $"<li><strong>Budget:</strong> {budget}</li>" +
+                    $"<li><strong>Duration:</strong> {duration}</li>" +
+                    $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul>" +
+                $"<p>Please follow up with {customerName} at <a href=\"mailto:{customerEmail}\">{customerEmail}</a> when you can.</p>" +
+                $"<p>– nice2strangers.org</p>";
+        }
+
+
+        public static string ClientSMConsultingEmailTemplate(
+        string name,
+        string platforms,
+        string goals,
+        string budget,
+        string duration,
+        string message)
+        {
+            return
+                $"<span>Hello, <strong>{name}</strong></span><br><br>" +
+                $"<span>Thank you for contacting Nice2Strangers! We've received your request and appreciate you reaching out.</span><br><br>" +
+                $"<span>Here’s a summary of your request:</span><br>" +
+                $"<ul>" +
+                $"<li><strong>Platforms:</strong> {platforms}</li>" +
+                $"<li><strong>Goals:</strong> {goals}</li>" +
+                $"<li><strong>Budget:</strong> {budget}</li>" +
+                $"<li><strong>Duration:</strong> {duration}</li>" +
+                $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul><br>" +
+                $"<span>Our customer service team has received your inquiry and we'll get back to you right away with a response.</span><br>" +
+                $"<span>You can expect to hear from us within the next 2-4 hours during business hours.</span><br><br>" +
+                $"<span>If you have urgent questions in the meantime, feel free to reply to this email or check our FAQ section on our website.</span><br><br>" +
+                $"<span>We look forward to assisting you!</span><br><br>" +
+                $"<span>Best regards,</span><br>" +
+                $"<span>Nice2Strangers Customer Service Team</span><br>" +
+                $"<span>Email: support@nice2strangers.org</span><br>" +
+                $"<span>Hours: Monday-Friday 8AM-6PM EST</span><br>";
+        }
+
+        public static string AdminSMCreationEmailTemplate(
+        string customerName,
+        string customerEmail,
+        string platforms,
+        string contentType,
+        string freq,
+        string budget,
+        string duration,
+        string message)
+        {
+            return
+                $"<p>Hey Brandon,</p>" +
+                $"<p><strong>{customerName}</strong> just inquired about <strong>{Constants.Services.SMConsulting}</strong> through the website.</p>" +
+                $"<p>Here are the details of the request:</p>" +
+                $"<ul>" +
+                    $"<li><strong>Name:</strong> {customerName}</li>" +
+                    $"<li><strong>Email:</strong> {customerEmail}</li>" +
+                    $"<li><strong>Plaforms:</strong> {platforms}</li>" +
+                    $"<li><strong>Content Type:</strong> {contentType}</li>" +
+                    $"<li><strong>Freq:</strong> {freq}</li>" +
+                    $"<li><strong>Budget:</strong> {budget}</li>" +
+                    $"<li><strong>Duration:</strong> {duration}</li>" +
+                    $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul>" +
+                $"<p>Please follow up with {customerName} at <a href=\"mailto:{customerEmail}\">{customerEmail}</a> when you can.</p>" +
+                $"<p>– nice2strangers.org</p>";
+        }
+
+
+        public static string ClientSMCreationEmailTemplate(
+        string name,
+        string platforms,
+        string contentType,
+        string freq,
+        string budget,
+        string duration,
+        string message)
+        {
+            return
+                $"<span>Hello, <strong>{name}</strong></span><br><br>" +
+                $"<span>Thank you for contacting Nice2Strangers! We've received your request and appreciate you reaching out.</span><br><br>" +
+                $"<span>Here’s a summary of your request:</span><br>" +
+                $"<ul>" +
+                $"<li><strong>Platforms:</strong> {platforms}</li>" +
+                $"<li><strong>Content Type:</strong> {contentType}</li>" +
+                $"<li><strong>Frequency:</strong> {freq}</li>" +
+                $"<li><strong>Budget:</strong> {budget}</li>" +
+                $"<li><strong>Duration:</strong> {duration}</li>" +
+                $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul><br>" +
+                $"<span>Our customer service team has received your inquiry and we'll get back to you right away with a response.</span><br>" +
+                $"<span>You can expect to hear from us within the next 2-4 hours during business hours.</span><br><br>" +
+                $"<span>If you have urgent questions in the meantime, feel free to reply to this email or check our FAQ section on our website.</span><br><br>" +
+                $"<span>We look forward to assisting you!</span><br><br>" +
+                $"<span>Best regards,</span><br>" +
+                $"<span>Nice2Strangers Customer Service Team</span><br>" +
+                $"<span>Email: support@nice2strangers.org</span><br>" +
+                $"<span>Hours: Monday-Friday 8AM-6PM EST</span><br>";
+        }
+
+
+        public static string AdminVideoEditingEmailTemplate(
+        string customerName,
+        string customerEmail,
+        string platforms,
+        string contentType,
+        string otherCT,
+        string budget,
+        string duration,
+        string message)
+        {
+            return
+                $"<p>Hey Brandon,</p>" +
+                $"<p><strong>{customerName}</strong> just inquired about <strong>{Constants.Services.VideoEditing}</strong> through the website.</p>" +
+                $"<p>Here are the details of the request:</p>" +
+                $"<ul>" +
+                    $"<li><strong>Name:</strong> {customerName}</li>" +
+                    $"<li><strong>Email:</strong> {customerEmail}</li>" +
+                    $"<li><strong>Plaforms:</strong> {platforms}</li>" +
+                    $"<li><strong>Content Type:</strong> {contentType}</li>" +
+                    $"<li><strong>Other Content Type:</strong> {otherCT}</li>" +
+                    $"<li><strong>Budget:</strong> {budget}</li>" +
+                    $"<li><strong>Duration:</strong> {duration}</li>" +
+                    $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul>" +
+                $"<p>Please follow up with {customerName} at <a href=\"mailto:{customerEmail}\">{customerEmail}</a> when you can.</p>" +
+                $"<p>– nice2strangers.org</p>";
+        }
+
+
+        public static string ClientVideoEditingEmailTemplate(
+        string name,
+        string platforms,
+        string contentType,
+        string otherCT,
+        string budget,
+        string duration,
+        string message)
+        {
+            return
+                $"<span>Hello, <strong>{name}</strong></span><br><br>" +
+                $"<span>Thank you for contacting Nice2Strangers! We've received your request and appreciate you reaching out.</span><br><br>" +
+                $"<span>Here’s a summary of your request:</span><br>" +
+                $"<ul>" +
+                $"<li><strong>Platforms:</strong> {platforms}</li>" +
+                $"<li><strong>Content Type:</strong> {contentType}</li>" +
+                $"<li><strong>Other Content Type:</strong> {otherCT}</li>" +
+                $"<li><strong>Budget:</strong> {budget}</li>" +
+                $"<li><strong>Duration:</strong> {duration}</li>" +
+                $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul><br>" +
+                $"<span>Our customer service team has received your inquiry and we'll get back to you right away with a response.</span><br>" +
+                $"<span>You can expect to hear from us within the next 2-4 hours during business hours.</span><br><br>" +
+                $"<span>If you have urgent questions in the meantime, feel free to reply to this email or check our FAQ section on our website.</span><br><br>" +
+                $"<span>We look forward to assisting you!</span><br><br>" +
+                $"<span>Best regards,</span><br>" +
+                $"<span>Nice2Strangers Customer Service Team</span><br>" +
+                $"<span>Email: support@nice2strangers.org</span><br>" +
+                $"<span>Hours: Monday-Friday 8AM-6PM EST</span><br>";
+        }
+
+
+        public static string AdminSoftwareEmailTemplate(
+        string customerName,
+        string customerEmail,
+        string platforms,
+        string budget,
+        string timeline,
+        string message)
+        {
+            return
+                $"<p>Hey Brandon,</p>" +
+                $"<p><strong>{customerName}</strong> just inquired about <strong>{Constants.Services.Software}</strong> through the website.</p>" +
+                $"<p>Here are the details of the request:</p>" +
+                $"<ul>" +
+                    $"<li><strong>Name:</strong> {customerName}</li>" +
+                    $"<li><strong>Email:</strong> {customerEmail}</li>" +
+                    $"<li><strong>Plaforms:</strong> {platforms}</li>" +
+                    $"<li><strong>Budget:</strong> {budget}</li>" +
+                    $"<li><strong>Duration:</strong> {timeline}</li>" +
+                    $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul>" +
+                $"<p>Please follow up with {customerName} at <a href=\"mailto:{customerEmail}\">{customerEmail}</a> when you can.</p>" +
+                $"<p>– nice2strangers.org</p>";
+        }
+
+
+        public static string ClientSoftwareEmailTemplate(
+        string name,
+        string platforms,
+        string budget,
+        string timeline,
+        string message)
+        {
+            return
+                $"<span>Hello, <strong>{name}</strong></span><br><br>" +
+                $"<span>Thank you for contacting Nice2Strangers! We've received your request and appreciate you reaching out.</span><br><br>" +
+                $"<span>Here’s a summary of your request:</span><br>" +
+                $"<ul>" +
+                $"<li><strong>Platforms:</strong> {platforms}</li>" +
+                $"<li><strong>Budget:</strong> {budget}</li>" +
+                $"<li><strong>Timeline:</strong> {timeline}</li>" +
+                $"<li><strong>Message:</strong> {message}</li>" +
+                $"</ul><br>" +
+                $"<span>Our customer service team has received your inquiry and we'll get back to you right away with a response.</span><br>" +
+                $"<span>You can expect to hear from us within the next 2-4 hours during business hours.</span><br><br>" +
+                $"<span>If you have urgent questions in the meantime, feel free to reply to this email or check our FAQ section on our website.</span><br><br>" +
+                $"<span>We look forward to assisting you!</span><br><br>" +
+                $"<span>Best regards,</span><br>" +
+                $"<span>Nice2Strangers Customer Service Team</span><br>" +
+                $"<span>Email: support@nice2strangers.org</span><br>" +
+                $"<span>Hours: Monday-Friday 8AM-6PM EST</span><br>";
+        }
+
+
+
+
     }
 }

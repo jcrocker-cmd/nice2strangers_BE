@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Crud.Models.Entities.Services;
 using Crud.Models.Entities;
 using Crud.Models.Auth;
 
@@ -33,5 +34,10 @@ namespace Crud.Data
         public DbSet<SP_Employee> SP_Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<VideoEditingModel> VideoEditingModel { get; set; }
+        public DbSet<DroneModel> DroneModel { get; set; }
+        public DbSet<SocialMediaConsultingModel> SocialMediaConsultingModel { get; set; }
+        public DbSet<SocialMediaCreationModel> SocialMediaCreationModel { get; set; }
+        public DbSet<WebAppModel> WebAppModel { get; set; }
     }
 }

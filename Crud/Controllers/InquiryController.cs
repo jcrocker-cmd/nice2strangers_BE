@@ -23,18 +23,11 @@ namespace Crud.Controllers
             this._inquiryService = _inquiryService;
         }
 
-        [HttpPost("send-email")]
-        public async Task<IActionResult> SendEmail(EmailRequest request)
-        {
-            var result = await _inquiryService.SendEmailAsync(request);
-            return Ok(result);
-        }
-
         [HttpPost("post-contact-us")]
         public async Task<IActionResult> ContactUs([FromBody] EmailRequest request)
         {
-            var result = await _inquiryService.ContactUsAsync(request);
-            return Ok(result);
+                var result = await _inquiryService.ContactUsAsync(request);
+                return Ok(result);
         }
 
         [HttpGet("get-contact-us")]

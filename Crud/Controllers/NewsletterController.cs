@@ -23,7 +23,7 @@ namespace Crud.Controllers
         }
 
         [HttpPost("post-newsletter")]
-        public async Task<IActionResult> Newsletter(NewsletterViewModel newsletterViewModel)
+        public async Task<IActionResult> Newsletter([FromBody] NewsletterViewModel newsletterViewModel)
         {
             var newsletter = await _newsletterService.PostNewsletter(newsletterViewModel);
             return Ok(newsletter);

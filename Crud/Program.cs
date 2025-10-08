@@ -42,6 +42,20 @@ builder.Services.ConfigureExternalCookie(options =>
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.CallbackPath = "/api/Auth/google-response"; // must match Google redirect URI
+        // Ensure profile info is included (for GivenName, Surname, etc.)
+        options.Scope.Add("profile");
+
+        // Optional: map the claims manually if needed
+        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.GivenName, "given_name");
+        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Surname, "family_name");
+        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
+    });
 
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 {

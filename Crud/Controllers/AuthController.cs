@@ -289,7 +289,6 @@ namespace Crud.Controllers
             // redirect to frontend with token
             //return Redirect($"http://localhost:5173/login?token={jwt}");
             return Redirect($"https://nice2strangers.org/login?token={jwt}");
-
         }
 
 

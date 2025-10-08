@@ -228,7 +228,8 @@ namespace Crud.Controllers
         [HttpGet("google-login")]
         public IActionResult GoogleLogin()
         {
-            var redirectUrl = Url.Action("GoogleResponse");
+            //var redirectUrl = Url.Action("GoogleResponse");
+            var redirectUrl = Url.Action("GoogleResponse", "Auth", null, Request.Scheme);
             var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
             return Challenge(properties, "Google");
         }
@@ -241,6 +242,14 @@ namespace Crud.Controllers
 
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindByEmailAsync(email);
+            var firstName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
+            var lastName = info.Principal.FindFirstValue(ClaimTypes.Surname);
+
+            var roleExists = await _roleManager.RoleExistsAsync("User");
+            if (!roleExists)
+            {
+                await _roleManager.CreateAsync(new IdentityRole("User"));
+            }
 
             if (user == null)
             {
@@ -248,8 +257,8 @@ namespace Crud.Controllers
                 {
                     Email = email,
                     UserName = email,
-                    FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
-                    LastName = info.Principal.FindFirstValue(ClaimTypes.Surname)
+                    FirstName = firstName,
+                    LastName = lastName,
                 };
                 await _userManager.CreateAsync(user);
                 await _userManager.AddToRoleAsync(user, "User");
@@ -257,7 +266,7 @@ namespace Crud.Controllers
 
             // generate JWT token same as your login method
             var roles = await _userManager.GetRolesAsync(user);
-            var role = roles.FirstOrDefault();
+            var role = roles.FirstOrDefault() ?? "User";
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
@@ -267,7 +276,9 @@ namespace Crud.Controllers
                 {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, role)
+            new Claim(ClaimTypes.Role, role),
+            new Claim("firstName", user.FirstName ?? firstName),
+            new Claim("lastName", user.LastName ?? lastName)
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -276,7 +287,9 @@ namespace Crud.Controllers
             var jwt = tokenHandler.WriteToken(token);
 
             // redirect to frontend with token
-            return Redirect($"http://localhost:5173/login?token={jwt}");
+            //return Redirect($"http://localhost:5173/login?token={jwt}");
+            return Redirect($"https://nice2strangers.org/login?token={jwt}");
+
         }
 
 

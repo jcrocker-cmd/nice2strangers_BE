@@ -23,8 +23,8 @@ namespace Crud.Controllers
         [HttpPost("create-checkout-session")]
         public async Task<IActionResult> CreateCheckoutSession()
         {
-            var successUrl = "https://localhost:5001/success";
-            var cancelUrl = "https://localhost:5001/cancel";
+            var successUrl = Constants.URL.SuccessOrder;
+            var cancelUrl = Constants.URL.FailedOrder;
 
             var session = await _stripePaymentService.CreateCheckoutSession(successUrl, cancelUrl);
             return Ok(new { sessionId = session.Id, url = session.Url });
@@ -33,8 +33,8 @@ namespace Crud.Controllers
         [HttpPost("create-checkout")]
         public async Task<IActionResult> CreateCheckoutSession([FromBody] List<CheckoutViewModel> selectedProducts)
         {
-            var successUrl = "http://localhost:5173/shop-page";
-            var cancelUrl = "http://localhost:3000/cancel";
+            var successUrl = Constants.URL.SuccessOrder;
+            var cancelUrl = Constants.URL.FailedOrder;
 
             var session = await _stripePaymentService.CreateCheckout(selectedProducts, successUrl, cancelUrl);
 

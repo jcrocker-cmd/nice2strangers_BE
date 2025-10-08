@@ -42,20 +42,6 @@ builder.Services.ConfigureExternalCookie(options =>
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
-builder.Services.AddAuthentication()
-    .AddGoogle(options =>
-    {
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-        options.CallbackPath = "/api/Auth/google-response"; // must match Google redirect URI
-        // Ensure profile info is included (for GivenName, Surname, etc.)
-        options.Scope.Add("profile");
-
-        // Optional: map the claims manually if needed
-        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.GivenName, "given_name");
-        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Surname, "family_name");
-        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
-    });
 
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 {
@@ -67,8 +53,7 @@ var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = IdentityConstants.ExternalScheme; // for Google login
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; // for Google login
 })
 .AddJwtBearer(options =>
 {
@@ -89,13 +74,6 @@ builder.Services.AddAuthentication(options =>
     options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.GivenName, "given_name");
     options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Surname, "family_name");
     options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
-
-    // Optional: force HTTPS redirect if hosted behind proxy
-    options.Events.OnRedirectToAuthorizationEndpoint = context =>
-    {
-        context.Response.Redirect(context.RedirectUri.Replace("http://", "https://"));
-        return Task.CompletedTask;
-    };
 });
 
 
@@ -150,8 +128,8 @@ var app = builder.Build();
 //No Need Update Database
 using (var scope = app.Services.CreateScope())
 {
-   var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-   dbContext.Database.Migrate();
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+    dbContext.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.

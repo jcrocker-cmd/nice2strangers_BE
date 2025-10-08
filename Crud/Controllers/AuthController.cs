@@ -276,7 +276,7 @@ namespace Crud.Controllers
             var jwt = tokenHandler.WriteToken(token);
 
             // redirect to frontend with token
-            return Redirect($"http://localhost:5173/login?token={jwt}");
+            return Redirect($"https://api.nice2strangers.org/login?token={jwt}");
         }
 
 

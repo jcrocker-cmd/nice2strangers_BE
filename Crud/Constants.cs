@@ -34,10 +34,12 @@ namespace Crud
 
         public static class URL
         {
-            public const string BaseUrl = "https://localhost:5001/";
-            public const string Products = $"{BaseUrl}/products";
-            public const string CreateCheckoutSession = "create-checkout-session";
-            public const string CreateCheckout = "create-checkout";
+            //public const string BaseUrl = "https://localhost:5001/";
+            //public const string Products = $"{BaseUrl}/products";
+            //public const string CreateCheckoutSession = "create-checkout-session";
+            //public const string CreateCheckout = "create-checkout";
+            public const string FailedOrder = "http://localhost:5173/failed-order";
+            public const string SuccessOrder = "http://localhost:5173/success-order";
         }
 
         public static class Subject

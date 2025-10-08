@@ -1,14 +1,15 @@
 ﻿using Crud.Contracts;
 using Crud.Data;
+using Crud.Models.Auth;
 using Crud.Service;
 using Hangfire;
 using Hangfire.SqlServer;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Crud.Models.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,13 @@ builder.Services.AddAuthentication()
         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
         options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
         options.CallbackPath = "/api/Auth/google-callback"; // must match Google redirect URI
+        // Ensure profile info is included (for GivenName, Surname, etc.)
+        options.Scope.Add("profile");
+
+        // Optional: map the claims manually if needed
+        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.GivenName, "given_name");
+        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Surname, "family_name");
+        options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
     });
 
 
@@ -111,11 +119,11 @@ builder.Services.AddSignalR();
 var app = builder.Build();
 
 //No Need Update Database
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-    dbContext.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+//    dbContext.Database.Migrate();
+//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

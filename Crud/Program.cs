@@ -15,15 +15,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Allow CORS
 builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowViteDev", policy =>
     {
-        options.AddPolicy("AllowViteDev", policy =>
-        {
-            policy.WithOrigins("https://nice2strangers.org", "http://localhost:5173")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        });
+        policy.WithOrigins("https://nice2strangers.org", "http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
+});
 
 // ✅ Add ASP.NET Core Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -31,11 +31,17 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 //
 
-builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.TokenLifespan = TimeSpan.FromMinutes(10); // token expires in 10 minutes
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
+builder.Services.ConfigureExternalCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
 builder.Services.AddAuthentication()
     .AddGoogle(options =>
     {
@@ -51,17 +57,21 @@ builder.Services.AddAuthentication()
         options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
     });
 
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromMinutes(10); // token expires in 10 minutes
+});
 
-// JWT Authentication Configuration
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme; // for Google login
 })
 .AddJwtBearer(options =>
-{ 
+{
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
@@ -69,7 +79,26 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
+})
+.AddGoogle("Google", options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    options.CallbackPath = "/api/Auth/google-response";
+    options.Scope.Add("profile");
+    options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.GivenName, "given_name");
+    options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Surname, "family_name");
+    options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
+
+    // Optional: force HTTPS redirect if hosted behind proxy
+    options.Events.OnRedirectToAuthorizationEndpoint = context =>
+    {
+        context.Response.Redirect(context.RedirectUri.Replace("http://", "https://"));
+        return Task.CompletedTask;
+    };
 });
+
+
 //
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
@@ -135,6 +164,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCors("AllowViteDev");
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
@@ -144,7 +174,7 @@ app.MapHub<Crud.Hubs.EmployeeHub>("/employeeHub");
 app.UseHangfireDashboard();
 
 // Schedule the recurring job
-RecurringJob.AddOrUpdate<EmployeeJobService>("add-random-employee",job => job.AddRandomEmployeeAsync(),"0 * * * *");
+RecurringJob.AddOrUpdate<EmployeeJobService>("add-random-employee", job => job.AddRandomEmployeeAsync(), "0 * * * *");
 
 RecurringJob.AddOrUpdate<JobService>("backup-db", job => job.BackupDatabaseAsync(), "* * * * *");
 

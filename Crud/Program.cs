@@ -41,7 +41,7 @@ builder.Services.AddAuthentication()
     {
         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
         options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-        options.CallbackPath = "/api/Auth/google-callback"; // must match Google redirect URI
+        options.CallbackPath = "/api/Auth/google-response"; // must match Google redirect URI
         // Ensure profile info is included (for GivenName, Surname, etc.)
         options.Scope.Add("profile");
 

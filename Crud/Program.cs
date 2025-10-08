@@ -1,4 +1,4 @@
-﻿using Crud.Contracts;
+using Crud.Contracts;
 using Crud.Data;
 using Crud.Models.Auth;
 using Crud.Service;
@@ -31,17 +31,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 //
 
-builder.Services.ConfigureApplicationCookie(options =>
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 {
-    options.Cookie.SameSite = SameSiteMode.None;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.TokenLifespan = TimeSpan.FromMinutes(10); // token expires in 10 minutes
 });
 
-builder.Services.ConfigureExternalCookie(options =>
-{
-    options.Cookie.SameSite = SameSiteMode.None;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-});
 builder.Services.AddAuthentication()
     .AddGoogle(options =>
     {
@@ -57,21 +51,17 @@ builder.Services.AddAuthentication()
         options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
     });
 
-builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
-{
-    options.TokenLifespan = TimeSpan.FromMinutes(10); // token expires in 10 minutes
-});
 
+// JWT Authentication Configuration
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
 })
 .AddJwtBearer(options =>
-{
+{ 
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
@@ -79,25 +69,7 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
-})
-.AddGoogle(options =>
-{
-    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-    options.CallbackPath = "/api/Auth/google-response"; // ✅ must match Google redirect URI
-    options.Scope.Add("profile");
-    options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.GivenName, "given_name");
-    options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Surname, "family_name");
-    options.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
-
-    // Optional: force https redirect if hosted behind proxy
-    options.Events.OnRedirectToAuthorizationEndpoint = context =>
-    {
-        context.Response.Redirect(context.RedirectUri.Replace("http://", "https://"));
-        return Task.CompletedTask;
-    };
 });
-
 //
 
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
@@ -163,7 +135,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCors("AllowViteDev");
-app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

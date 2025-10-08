@@ -147,11 +147,11 @@ builder.Services.AddSignalR();
 var app = builder.Build();
 
 //No Need Update Database
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-//    dbContext.Database.Migrate();
-//}
+using (var scope = app.Services.CreateScope())
+{
+   var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+   dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

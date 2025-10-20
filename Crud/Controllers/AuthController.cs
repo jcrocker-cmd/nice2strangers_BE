@@ -181,7 +181,8 @@ namespace Crud.Controllers
                 email = user.Email,
                 role,
                 firstName = user.FirstName,
-                lastName = user.LastName
+                lastName = user.LastName,
+                userId = user.Id
             });
         }
 
@@ -228,14 +229,14 @@ namespace Crud.Controllers
         [HttpGet("google-login")]
         public IActionResult GoogleLogin()
         {
-            //var redirectUrl = Url.Action("GoogleResponse");
-            var redirectUrl = Url.Action("GoogleResponse", "Auth", null, Request.Scheme);
+            var redirectUrl = Url.Action("GoogleCallback");
+            //var redirectUrl = Url.Action("GoogleCallback", "Auth", null, Request.Scheme);
             var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
             return Challenge(properties, "Google");
         }
 
-        [HttpGet("google-response")]
-        public async Task<IActionResult> GoogleResponse()
+        [HttpGet("google-callback")]
+        public async Task<IActionResult> GoogleCallback()
         {
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null) return BadRequest("Error loading external login information.");
@@ -287,8 +288,8 @@ namespace Crud.Controllers
             var jwt = tokenHandler.WriteToken(token);
 
             // redirect to frontend with token
-            //return Redirect($"http://localhost:5173/login?token={jwt}");
-            return Redirect($"https://nice2strangers.org/login?token={jwt}");
+            return Redirect($"http://localhost:5173/login?token={jwt}");
+           // return Redirect($"https://nice2strangers.org/login?token={jwt}");
         }
 
 

@@ -67,13 +67,38 @@ namespace Crud.Service
         }
 
 
+        //public async Task SendEmailAsync(string toEmail, string subject, string rawBody)
+        //{
+        //    var template = new EmailTemplateBuilder();
+        //    string finalHtml = template.BuildContactEmailTemplate(rawBody, subject);
+
+        //    var email = new MimeMessage();
+        //    email.From.Add(new MailboxAddress(_smtpSettings.SenderName, _smtpSettings.Email));
+        //    email.To.Add(MailboxAddress.Parse(toEmail));
+        //    email.Subject = subject;
+        //    email.Body = new TextPart("html") { Text = finalHtml };
+
+        //    using var smtp = new SmtpClient();
+        //    await smtp.ConnectAsync(_smtpSettings.Host, _smtpSettings.Port, SecureSocketOptions.StartTls);
+        //    await smtp.AuthenticateAsync(_smtpSettings.Email, _smtpSettings.Password);
+        //    await smtp.SendAsync(email);
+        //    await smtp.DisconnectAsync(true);
+        //}
+
+
         public async Task SendEmailAsync(string toEmail, string subject, string rawBody)
         {
             var template = new EmailTemplateBuilder();
             string finalHtml = template.BuildContactEmailTemplate(rawBody, subject);
 
             var email = new MimeMessage();
-            email.From.Add(new MailboxAddress(_smtpSettings.SenderName, _smtpSettings.Email));
+
+            // 👇 use support@nice2strangers.org as sender (if configured)
+            email.From.Add(new MailboxAddress(_smtpSettings.SenderName,
+                string.IsNullOrEmpty(_smtpSettings.FromAddress)
+                    ? _smtpSettings.Email
+                    : _smtpSettings.FromAddress));
+
             email.To.Add(MailboxAddress.Parse(toEmail));
             email.Subject = subject;
             email.Body = new TextPart("html") { Text = finalHtml };
@@ -84,6 +109,7 @@ namespace Crud.Service
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
         }
+
 
     }
 }

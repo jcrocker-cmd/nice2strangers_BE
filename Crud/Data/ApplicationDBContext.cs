@@ -39,5 +39,8 @@ namespace Crud.Data
         public DbSet<SocialMediaConsultingModel> SocialMediaConsultingModel { get; set; }
         public DbSet<SocialMediaCreationModel> SocialMediaCreationModel { get; set; }
         public DbSet<WebAppModel> WebAppModel { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<BuyedProduct> BuyedProducts { get; set; }
+
     }
 }

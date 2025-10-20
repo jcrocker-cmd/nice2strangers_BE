@@ -7,7 +7,7 @@ namespace Crud
 {
     public static class Constants
     {
-        public const string AdminEmail = "narbajajc@gmail.com";
+        public const string AdminEmail = "brandon@nice2strangers.org";
 
         public static class Services
         {

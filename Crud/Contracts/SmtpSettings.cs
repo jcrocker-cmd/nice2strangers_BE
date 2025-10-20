@@ -7,5 +7,6 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string SenderName { get; set; }
+        public string FromAddress { get; set; }
     }
 }

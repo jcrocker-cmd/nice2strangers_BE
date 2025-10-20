@@ -70,7 +70,6 @@ namespace Crud.Controllers
             return Ok(balance);
         }
 
-
     }
 
 }

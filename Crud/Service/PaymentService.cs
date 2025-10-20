@@ -1,11 +1,14 @@
-﻿using Crud.Contracts;
+﻿using Crud;
+using Crud.Contracts;
+using Crud.Data;
 using Crud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stripe;
 using Stripe.Checkout;
 using System.Collections.Generic;
 using System.Globalization;
-using Crud;
+using System.Text.Json;
 
 
 namespace Crud.Service
@@ -14,12 +17,13 @@ namespace Crud.Service
     {
         private readonly IConfiguration _config;
         private readonly IEmailService _emailService;
-
-        public PaymentService(IConfiguration config, IEmailService emailService)
+        public readonly ApplicationDBContext dbContext;
+        public PaymentService(IConfiguration config, IEmailService emailService, ApplicationDBContext dbContext)
         {
             _config = config;
             StripeConfiguration.ApiKey = _config["Stripe:SecretKey"];
             _emailService = emailService;
+            this.dbContext = dbContext;
         }
 
         public async Task<Session> CreateCheckoutSession(string successUrl, string cancelUrl)
@@ -55,7 +59,6 @@ namespace Crud.Service
 
         public async Task<Session> CreateCheckout(List<CheckoutViewModel> products, string successUrl, string cancelUrl)
         {
-
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string> { "card" },
@@ -70,12 +73,14 @@ namespace Crud.Service
                             Name = p.ProductName,
                             Metadata = new Dictionary<string, string>
                             {
+                              { "product_id", p.ProductId.ToString() },
                               { "product_name", p.ProductName },
-                              { "quantity", "1" }
+                              { "quantity", p.Quantity.ToString() },
+                              { "user_id", p.UserId.ToString() }
                             }
                         }
                     },
-                    Quantity = 1
+                    Quantity = p.Quantity
                 }).ToList(),
                 Mode = "payment",
                 SuccessUrl = successUrl,
@@ -182,6 +187,31 @@ namespace Crud.Service
             return results;
         }
 
+        //public async Task<bool> AddToCartAsync(Cart model)
+        //{
+        //    var existing = await _context.AddToCarts
+        //        .FirstOrDefaultAsync(c => c.UserId == model.UserId && c.ProductId == model.ProductId);
+
+        //    if (existing != null)
+        //    {
+        //        existing.Quantity += model.Quantity;
+        //    }
+        //    else
+        //    {
+        //        var cart = new AddToCart
+        //        {
+        //            Id = Guid.NewGuid(),
+        //            UserId = model.UserId,
+        //            ProductId = model.ProductId,
+        //            Quantity = model.Quantity
+        //        };
+        //        await _context.AddToCarts.AddAsync(cart);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
+
         public async Task<BalanceViewModel> GetStripeBalanceAsync()
         {
             var balanceService = new BalanceService();
@@ -198,7 +228,6 @@ namespace Crud.Service
             };
             return result;
         }
-
 
     }
 }

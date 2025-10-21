@@ -201,7 +201,7 @@ namespace Crud.Controllers
                 return Ok(new { message = "If an account exists with that email, a reset link has been sent." });
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var frontendUrl = "http://localhost:5173/reset-password";
+            var frontendUrl = "https://nice2strangers.org/reset-password";
             var encodedToken = System.Web.HttpUtility.UrlEncode(token);
             var resetLink = $"{frontendUrl}?token={encodedToken}&email={user.Email}";
 

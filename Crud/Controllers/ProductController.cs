@@ -75,5 +75,12 @@ namespace Crud.Controllers
             return Ok(count);
         }
 
+        [HttpGet("total-stocks")]
+        public async Task<IActionResult> GetTotalStocks()
+        {
+            var totalStocks = await _productService.GetTotalStocksAsync();
+            return Ok(new { totalStocks });
+        }
+
     }
 }

@@ -13,5 +13,7 @@ namespace Crud.Contracts
         Task<Product?> SoftDeleteProduct(Guid id);
         Task<Product?> RecoverProduct(Guid id);
         Task<ProductCountsViewModel> GetProductCountsAsync();
+        Task<int> GetTotalStocksAsync();
+
     }
 }

@@ -146,5 +146,12 @@ namespace Crud.Service
             };
         }
 
+        public async Task<int> GetTotalStocksAsync()
+        {
+            return await dbContext.Products
+                .Where(p => p.isActive == true) 
+                .SumAsync(p => p.Stocks);
+        }
+
     }
 }

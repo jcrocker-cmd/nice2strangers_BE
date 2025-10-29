@@ -41,6 +41,8 @@ namespace Crud.Data
         public DbSet<WebAppModel> WebAppModel { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<BuyedProduct> BuyedProducts { get; set; }
+        public DbSet<FAQsModel> FAQs { get; set; }
+        public DbSet<SocialLinks> SocialLinks { get; set; }
 
     }
 }

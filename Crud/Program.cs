@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowViteDev", policy =>
         {
-            policy.WithOrigins("https://nice2strangers.org", "http://localhost:5173")
+            policy.WithOrigins("https://nice2strangers.org", "http://localhost:5173", "http://localhost:3000")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();

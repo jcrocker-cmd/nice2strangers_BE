@@ -16,16 +16,12 @@ namespace Crud.Service
             _context = context;
         }
 
-        public async Task<SocialLinksViewModel> GetSocialLinksAsync()
+        public async Task<SocialLinksViewModel?> GetSocialLinksAsync()
         {
             var entity = await _context.SocialLinks.FirstOrDefaultAsync();
 
             if (entity == null)
-            {
-                entity = new SocialLinks();
-                _context.SocialLinks.Add(entity);
-                await _context.SaveChangesAsync();
-            }
+                return null; 
 
             return new SocialLinksViewModel
             {
@@ -36,6 +32,7 @@ namespace Crud.Service
                 Tiktok = entity.Tiktok
             };
         }
+
 
         public async Task<SocialLinksViewModel> UpdateSocialLinksAsync(SocialLinksViewModel updatedLinks)
         {

@@ -211,6 +211,30 @@ namespace Crud.Controllers
             return Ok(new { message = "Reset link sent to your email." });
         }
 
+        [HttpPost("forgot-password-admin")]
+        public async Task<IActionResult> ForgotPasswordAdmin([FromBody] ForgotPasswordViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return Ok(new { message = "If an account exists with that email, a reset link has been sent." });
+
+            // ✅ Ensure user is admin
+            var roles = await _userManager.GetRolesAsync(user);
+            if (!roles.Contains("Admin"))
+                return Ok(new { message = "If an account exists with that email, a reset link has been sent." });
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var frontendUrl = "https://admin.nice2strangers.org/reset-password";
+            var encodedToken = System.Web.HttpUtility.UrlEncode(token);
+            var resetLink = $"{frontendUrl}?token={encodedToken}&email={user.Email}";
+
+            var body = Constants.GetResetPasswordEmailBody(resetLink, user.FirstName ?? user.Email);
+
+            await _emailService.SendEmailAsync(user.Email, Constants.Subject.ResetPassword, body);
+            return Ok(new { message = "Reset link sent to your email." });
+        }
+
+
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel model)
         {
